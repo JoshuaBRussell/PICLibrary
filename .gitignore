@@ -1,0 +1,14 @@
+#---Files/Directories to ignore for the Library---#
+
+
+#Ignore Build Directory
+**/build
+
+#ignore rake file
+rakefile.rb
+
+#Ignore the support material for the test dir
+./test/support
+
+#Ignore Ceedling Files
+**/vendor

@@ -1,0 +1,8 @@
+test_switch_led.c:51:test_B1:FAIL: Expected TRUE Was FALSE
+test_switch_led.c:58:test_B2:FAIL: Expected TRUE Was FALSE
+test_switch_led.c:65:test_B3:FAIL: Expected TRUE Was FALSE
+test_switch_led.c:72:test_B4:FAIL: Expected TRUE Was FALSE
+
+-----------------------
+4 Tests 4 Failures 0 Ignored 
+FAIL

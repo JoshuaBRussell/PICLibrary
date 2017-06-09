@@ -1,0 +1,6 @@
+LD dspic33epsuper
+LC build/test/TestBuild.out
+IO NULL test/simulation/out.txt
+RP
+E
+quit
