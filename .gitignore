@@ -11,7 +11,7 @@ rakefile.rb
 ./test/support
 
 #Ignore the simulation files
-./test/simulation
+/test/simulation/out.txt
 
 #Ignore Ceedling Files
 **/vendor
