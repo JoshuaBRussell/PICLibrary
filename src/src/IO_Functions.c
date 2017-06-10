@@ -1,5 +1,7 @@
 #include "IO_Functions.h"
-#include "IO_Defines.h"
+
+#include <xc.h>
+#include <stdint.h>
 
 uint16_t volatile * const TRIS_ARRY[NUM_PORTS] = { (uint16_t*)&TRISA,
                                                    (uint16_t*)&TRISB };
@@ -7,13 +9,15 @@ uint16_t volatile * const TRIS_ARRY[NUM_PORTS] = { (uint16_t*)&TRISA,
 uint16_t volatile * const LAT_ARRY[NUM_PORTS] =  { (uint16_t*)&LATA,
                                                    (uint16_t*)&LATB };
 
-void setB15Out(){
-    *(TRIS_ARRY[1]) = 0x7FFF;
+
+void setPinOut(uint16_t port, uint16_t pin ){
+    *(TRIS_ARRY[port]) &= (~(0x1 << pin));
 }
 
-void B15On(){
-    *(LAT_ARRY[1]) = 0xFFFF;
+void setPinHigh(uint16_t port, uint16_t pin){
+    *(LAT_ARRY[port]) |=  (0x1 << pin);
 }
-void B15Off(){
-    *(LAT_ARRY[1]) = 0x7FFF;
+
+void togglePin(uint16_t port, uint16_t pin){
+    *(LAT_ARRY[port]) ^= (0x1 << pin);
 }
