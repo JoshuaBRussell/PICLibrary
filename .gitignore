@@ -10,5 +10,11 @@ rakefile.rb
 #Ignore the support material for the test dir
 ./test/support
 
+#Ignore the simulation files
+./test/simulation
+
 #Ignore Ceedling Files
 **/vendor
+
+#Ignore Docs Folder
+**/Docs
