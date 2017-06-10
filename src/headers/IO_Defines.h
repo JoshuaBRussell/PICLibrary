@@ -1,8 +1,10 @@
 #ifndef _IO_DEFINES_H_
 #define _IO_DEFINES_H_
 
+
 #include <stdint.h>
 #define NUM_PORTS 2
+#define NUM_IO_PINS 16
 
 #define INPUT 1
 #define OUTPUT 0
@@ -30,32 +32,11 @@ typedef enum
     Pin_B15
 } Pin_Channel;
 
+
 typedef struct {
     unsigned Pin:4;       //Pin Number
     unsigned Direction:1; //Input  | Output
     unsigned State:1;     //  HIGH | LOW
 } PIN_CONFIG;
-
-const PIN_CONFIG IO_CONFIG_TABLE[] =
-{
-//   -Pin-       -Direction-     -Init State-   //
-    {Pin_B0,     INPUT,          LOW},
-    {Pin_B1,     INPUT,          LOW},
-    {Pin_B2,     INPUT,          LOW},
-    {Pin_B3,     INPUT,          LOW},
-    {Pin_B4,     INPUT,          LOW},
-    {Pin_B5,     INPUT,          LOW},
-    {Pin_B6,     INPUT,          LOW},
-    {Pin_B7,     INPUT,          LOW},
-    {Pin_B8,     INPUT,          LOW},
-    {Pin_B9,     INPUT,          LOW},
-    {Pin_B10,    INPUT,          LOW},
-    {Pin_B11,    INPUT,          LOW},
-    {Pin_B12,    INPUT,          LOW},
-    {Pin_B13,    INPUT,          LOW},
-    {Pin_B14,    INPUT,          LOW},
-    {Pin_B15,    OUTPUT,         HIGH},
-
-};
 
 #endif
