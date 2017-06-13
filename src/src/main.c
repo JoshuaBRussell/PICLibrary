@@ -72,7 +72,9 @@ int main(void) {
     setPinHigh(1, 15);
     while(1){
         simple_delay();
-        togglePin(1, 15);
+        setPinLow(1, 15);
+        simple_delay();
+        setPinHigh(1, 15);
     }
 
     return 0;

@@ -18,6 +18,10 @@ void setPinHigh(uint16_t port, uint16_t pin){
     *(LAT_ARRY[port]) |=  (0x1 << pin);
 }
 
+void setPinLow(uint16_t port, uint16_t pin){
+    *(LAT_ARRY[port]) &= ~(0x1 << pin);
+}
+
 void togglePin(uint16_t port, uint16_t pin){
     *(LAT_ARRY[port]) ^= (0x1 << pin);
 }

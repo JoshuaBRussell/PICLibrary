@@ -49,7 +49,7 @@ void tearDown(void)
 
 }
 
-//----Test Port A TRIS----//
+//----Test Port A TRIS as Output----//
 void test_set_PinA0_as_Output(void)
 {
     setPinOut(0, 0);
@@ -74,7 +74,7 @@ void test_set_multiple_Pins_as_Output(void){
     TEST_ASSERT_BITS(0xFFFF, 0x7FFC, TRISA);
 }
 
-//----Test Port A LAT----//
+//----Test Port A LAT High----//
 
 void test_set_PinA0_HIGH(void){
     setPinHigh(0, 0);
@@ -98,6 +98,34 @@ void test_set_multiple_Pins_High(void){
     TEST_ASSERT_BITS(0xFFFF, 0x8003, LATA);
 }
 
+//---- Test Port A LAT Low ----//
+void test_set_PinA0_Low(void){
+    LATA = 0xFFFF;
+    setPinLow(0, 0);
+    TEST_ASSERT_BITS(0xFFFF, 0xFFFE, LATA);
+}
+
+void test_set_PinA1_Low(void){
+    LATA = 0xFFFF;
+    setPinLow(0, 1);
+    TEST_ASSERT_BITS(0xFFFF, 0xFFFD, LATA);
+}
+
+void test_set_PinA15_Low(void){
+    LATA = 0xFFFF;
+    setPinLow(0, 15);
+    TEST_ASSERT_BITS(0xFFFF, 0x7FFF, LATA);
+}
+
+void test_set_multiple_Pins_Low(void){
+    LATA = 0xFFFF;
+    setPinLow(0, 0);
+    setPinLow(0, 1);
+    setPinLow(0, 15);
+    TEST_ASSERT_BITS(0xFFFF, 0x7FFC, LATA);
+}
+
+//----
 void test_toggle_PinA0_Low_to_High(void){
     togglePin(0, 0);
     TEST_ASSERT_BITS(0xFFFF, 0x0001, LATA);
