@@ -23,7 +23,7 @@
 // FOSC
 #pragma config POSCMD = NONE            // Primary Oscillator Mode Select bits (Primary Oscillator disabled)
 #pragma config OSCIOFNC = OFF           // OSC2 Pin Function bit (OSC2 is clock output)
-#pragma config IOL1WAY = ON             // Peripheral pin select configuration (Allow only one reconfiguration)
+#pragma config IOL1WAY = ON             // Peripheral pin select configuration (AlHIGH only one reconfiguration)
 #pragma config FCKSM = CSDCMD           // Clock Switching Mode bits (Both Clock switching and Fail-safe Clock Monitor are disabled)
 
 // FOSCSEL
@@ -125,7 +125,7 @@ void test_set_multiple_Pins_Low(void){
     TEST_ASSERT_BITS(0xFFFF, 0x7FFC, LATA);
 }
 
-//----
+//----Test Port A LAT Toggle ----//
 void test_toggle_PinA0_Low_to_High(void){
     togglePin(0, 0);
     TEST_ASSERT_BITS(0xFFFF, 0x0001, LATA);
@@ -157,4 +157,93 @@ void test_toggle_muli_pins_mixed(void){
     togglePin(0, 1);
     togglePin(0, 0);
     TEST_ASSERT_BITS(0xFFFF, 0x0002, LATA);
+}
+
+//----Test IO_Config ----//
+void test_IO_Config_correctly_sets_all_pins(void){
+    const PIN_CONFIG IO_CONFIG_TABLE[] =
+    {
+    //   -Pin-       -Direction-     -Init State-   //
+        {Pin_A0,     OUTPUT,          HIGH},
+        {Pin_A1,     OUTPUT,          HIGH},
+        {Pin_A2,     OUTPUT,          HIGH},
+        {Pin_A3,     OUTPUT,          HIGH},
+        {Pin_A4,     OUTPUT,          HIGH},
+        {Pin_A5,     OUTPUT,          HIGH},
+        {Pin_A6,     OUTPUT,          HIGH},
+        {Pin_A7,     OUTPUT,          HIGH},
+        {Pin_A8,     OUTPUT,          HIGH},
+        {Pin_A9,     OUTPUT,          HIGH},
+        {Pin_A10,    OUTPUT,          HIGH},
+        {Pin_A11,    OUTPUT,          HIGH},
+        {Pin_A12,    OUTPUT,          HIGH},
+        {Pin_A13,    OUTPUT,          HIGH},
+        {Pin_A14,    OUTPUT,          HIGH},
+        {Pin_A15,    OUTPUT,          HIGH},
+        {Pin_B0,     OUTPUT,          HIGH},
+        {Pin_B1,     OUTPUT,          HIGH},
+        {Pin_B2,     OUTPUT,          HIGH},
+        {Pin_B3,     OUTPUT,          HIGH},
+        {Pin_B4,     OUTPUT,          HIGH},
+        {Pin_B5,     OUTPUT,          HIGH},
+        {Pin_B6,     OUTPUT,          HIGH},
+        {Pin_B7,     OUTPUT,          HIGH},
+        {Pin_B8,     OUTPUT,          HIGH},
+        {Pin_B9,     OUTPUT,          HIGH},
+        {Pin_B10,    OUTPUT,          HIGH},
+        {Pin_B11,    OUTPUT,          HIGH},
+        {Pin_B12,    OUTPUT,          HIGH},
+        {Pin_B13,    OUTPUT,          HIGH},
+        {Pin_B14,    OUTPUT,          HIGH},
+        {Pin_B15,    OUTPUT,          HIGH},
+
+
+    };
+    IO_Config(IO_CONFIG_TABLE);
+    TEST_ASSERT_BITS(0xFFFF, 0xFFFF, LATA);
+    TEST_ASSERT_BITS(0xFFFF, 0x0000, TRISA);
+}
+
+void test_IO_Config_correctly_sets_all_pins_alternating(void){
+    const PIN_CONFIG IO_CONFIG_TABLE[] =
+    {
+    //   -Pin-       -Direction-     -Init State-   //
+        {Pin_A0,     INPUT,          HIGH},
+        {Pin_A1,     OUTPUT,         LOW},
+        {Pin_A2,     INPUT,          HIGH},
+        {Pin_A3,     OUTPUT,         LOW},
+        {Pin_A4,     INPUT,          HIGH},
+        {Pin_A5,     OUTPUT,         LOW},
+        {Pin_A6,     INPUT,          HIGH},
+        {Pin_A7,     OUTPUT,         LOW},
+        {Pin_A8,     INPUT,          HIGH},
+        {Pin_A9,     OUTPUT,         LOW},
+        {Pin_A10,    INPUT,          HIGH},
+        {Pin_A11,    OUTPUT,         LOW},
+        {Pin_A12,    INPUT,          HIGH},
+        {Pin_A13,    OUTPUT,         LOW},
+        {Pin_A14,    INPUT,          HIGH},
+        {Pin_A15,    OUTPUT,         LOW},
+        {Pin_B0,     INPUT,          HIGH},
+        {Pin_B1,     OUTPUT,         LOW},
+        {Pin_B2,     INPUT,          HIGH},
+        {Pin_B3,     INPUT,          LOW},
+        {Pin_B4,     OUTPUT,         HIGH},
+        {Pin_B5,     OUTPUT,         LOW},
+        {Pin_B6,     INPUT,          HIGH},
+        {Pin_B7,     OUTPUT,         LOW},
+        {Pin_B8,     INPUT,          HIGH},
+        {Pin_B9,     OUTPUT,         LOW},
+        {Pin_B10,    INPUT,          HIGH},
+        {Pin_B11,    OUTPUT,         LOW},
+        {Pin_B12,    INPUT,          HIGH},
+        {Pin_B13,    OUTPUT,         LOW},
+        {Pin_B14,    INPUT,          HIGH},
+        {Pin_B15,    OUTPUT,         LOW},
+
+
+    };
+    IO_Config(IO_CONFIG_TABLE);
+    TEST_ASSERT_BITS(0xFFFF, 0x5555, LATA);
+    TEST_ASSERT_BITS(0xFFFF, 0x5555, TRISA);
 }

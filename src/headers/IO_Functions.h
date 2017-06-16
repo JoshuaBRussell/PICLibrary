@@ -9,6 +9,10 @@
 // NOTE: No bounds checking is performed! (That may change at a later date.)
 //----------------------------------------------------------------------------*/
 
+//Configures GPIO Pins to a desired state.
+//This can be done with all the supporting functions below, one step at a time.
+void IO_Config(const PIN_CONFIG * config);
+
 //Sets a port's pin to output
 void setPinOut(uint16_t port, uint16_t pin);
 

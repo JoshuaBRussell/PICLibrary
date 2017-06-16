@@ -4,7 +4,8 @@
 
 #include <stdint.h>
 #define NUM_PORTS 2
-#define NUM_IO_PINS 16
+#define IO_PINS_PER_PORT 16
+#define TOTAL_IO_PINS 32
 
 #define INPUT 1
 #define OUTPUT 0
@@ -15,6 +16,22 @@
 
 typedef enum
 {
+    Pin_A0,
+    Pin_A1,
+    Pin_A2,
+    Pin_A3,
+    Pin_A4,
+    Pin_A5,
+    Pin_A6,
+    Pin_A7,
+    Pin_A8,
+    Pin_A9,
+    Pin_A10,
+    Pin_A11,
+    Pin_A12,
+    Pin_A13,
+    Pin_A14,
+    Pin_A15,
     Pin_B0,
     Pin_B1,
     Pin_B2,
@@ -35,7 +52,7 @@ typedef enum
 
 
 typedef struct {
-    unsigned Pin:4;       //Pin Number
+    unsigned Pin:5;       //Pin Number
     unsigned Direction:1; //Input  | Output
     unsigned State:1;     //  HIGH | LOW
 } PIN_CONFIG;

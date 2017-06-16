@@ -36,22 +36,39 @@
 const PIN_CONFIG IO_CONFIG_TABLE[] =
 {
 //   -Pin-       -Direction-     -Init State-   //
-    {Pin_B0,     INPUT,          LOW},
-    {Pin_B1,     INPUT,          LOW},
-    {Pin_B2,     INPUT,          LOW},
-    {Pin_B3,     INPUT,          LOW},
-    {Pin_B4,     INPUT,          LOW},
-    {Pin_B5,     INPUT,          LOW},
-    {Pin_B6,     INPUT,          LOW},
-    {Pin_B7,     INPUT,          LOW},
-    {Pin_B8,     INPUT,          LOW},
-    {Pin_B9,     INPUT,          LOW},
-    {Pin_B10,    INPUT,          LOW},
-    {Pin_B11,    INPUT,          LOW},
-    {Pin_B12,    INPUT,          LOW},
-    {Pin_B13,    INPUT,          LOW},
-    {Pin_B14,    INPUT,          LOW},
-    {Pin_B15,    OUTPUT,         HIGH},
+    {Pin_A0,     OUTPUT,          LOW},
+    {Pin_A1,     OUTPUT,          LOW},
+    {Pin_A2,     OUTPUT,          LOW},
+    {Pin_A3,     OUTPUT,          LOW},
+    {Pin_A4,     OUTPUT,          LOW},
+    {Pin_A5,     OUTPUT,          LOW},
+    {Pin_A6,     OUTPUT,          LOW},
+    {Pin_A7,     OUTPUT,          LOW},
+    {Pin_A8,     OUTPUT,          LOW},
+    {Pin_A9,     OUTPUT,          LOW},
+    {Pin_A10,    OUTPUT,          LOW},
+    {Pin_A11,    OUTPUT,          LOW},
+    {Pin_A12,    OUTPUT,          LOW},
+    {Pin_A13,    OUTPUT,          LOW},
+    {Pin_A14,    OUTPUT,          LOW},
+    {Pin_A15,    OUTPUT,          LOW},
+    {Pin_B0,     OUTPUT,          LOW},
+    {Pin_B1,     OUTPUT,          LOW},
+    {Pin_B2,     OUTPUT,          LOW},
+    {Pin_B3,     OUTPUT,          LOW},
+    {Pin_B4,     OUTPUT,          LOW},
+    {Pin_B5,     OUTPUT,          LOW},
+    {Pin_B6,     OUTPUT,          LOW},
+    {Pin_B7,     OUTPUT,          LOW},
+    {Pin_B8,     OUTPUT,          LOW},
+    {Pin_B9,     OUTPUT,          LOW},
+    {Pin_B10,    OUTPUT,          LOW},
+    {Pin_B11,    OUTPUT,          LOW},
+    {Pin_B12,    OUTPUT,          LOW},
+    {Pin_B13,    OUTPUT,          HIGH},
+    {Pin_B14,    OUTPUT,          HIGH},
+    {Pin_B15,    OUTPUT,          HIGH},
+
 
 };
 
@@ -68,13 +85,15 @@ void simple_delay(){
 
 int main(void) {
 
-    setPinOut(1, 15);
-    setPinHigh(1, 15);
+    IO_Config(IO_CONFIG_TABLE);
     while(1){
         simple_delay();
         setPinLow(1, 15);
         simple_delay();
-        setPinHigh(1, 15);
+        setPinLow(1, 14);
+        simple_delay();
+        setPinHigh(1,15);
+        setPinHigh(1,14);
     }
 
     return 0;
