@@ -74,6 +74,41 @@ void test_set_multiple_Pins_as_Output(void){
     TEST_ASSERT_BITS(0xFFFF, 0x7FFC, TRISA);
 }
 
+//----Test Port A TRIS as Input----//
+void test_set_PinA0_as_Input(void)
+{
+    TRISA = 0x0000;
+    setPinIn(0, 0);
+    TEST_ASSERT_BITS(0xFFFF, 0x0001, TRISA);
+
+}
+
+void test_set_PinA1_as_Input(void){
+    TRISA = 0x0000;
+    setPinIn(0, 1);
+    TEST_ASSERT_BITS(0xFFFF, 0x0002, TRISA);
+}
+
+void test_set_PinA15_as_Input(void){
+    TRISA = 0x0000;
+    setPinIn(0, 15);
+    TEST_ASSERT_BITS(0xFFFF, 0x8000, TRISA);
+}
+
+void test_set_multiple_Pins_as_Input(void){
+    TRISA = 0x0000;
+    setPinIn(0, 15);
+    setPinIn(0, 1);
+    setPinIn(0, 0);
+    TEST_ASSERT_BITS(0xFFFF, 0x8003, TRISA);
+}
+
+//----Test Port A Read----//
+// void test_read_PinA0_as_High(void){
+//     uint16_t PORTA_sim = 0x0001;
+//     TEST_ASSERT_TRUE(readPin(0,0));
+// }
+
 //----Test Port A LAT High----//
 
 void test_set_PinA0_HIGH(void){
@@ -247,3 +282,86 @@ void test_IO_Config_correctly_sets_all_pins_alternating(void){
     TEST_ASSERT_BITS(0xFFFF, 0x5555, LATA);
     TEST_ASSERT_BITS(0xFFFF, 0x5555, TRISA);
 }
+
+//----Test Setting Open Drain----//
+void test_set_ODCA0(void){
+    ODCA = 0x0000;
+    setPinOD(0, 0);
+    TEST_ASSERT_BITS(0xFFFF, 0x0001, ODCA);
+}
+
+void test_set_ODCA1(void){
+    ODCA = 0x0000;
+    setPinOD(0, 1);
+    TEST_ASSERT_BITS(0xFFFF, 0x0002, ODCA);
+}
+
+void test_set_ODCA15(void){
+    ODCA = 0x0000;
+    setPinOD(0, 15);
+    TEST_ASSERT_BITS(0xFFFF, 0x8000, ODCA);
+}
+
+void test_set_multiple_Pins_OD(void){
+    ODCA = 0x0000;
+    setPinOD(0, 0);
+    setPinOD(0, 1);
+    setPinOD(0, 15);
+    TEST_ASSERT_BITS(0xFFFF, 0x8003, ODCA);
+}
+
+//----Test Setting Pull Up----//
+void test_set_CNPUA0(void){
+    CNPUA = 0x0000;
+    setPinPU(0, 0);
+    TEST_ASSERT_BITS(0xFFFF, 0x0001, CNPUA);
+}
+
+void test_set_CNPUA1(void){
+    CNPUA = 0x0000;
+    setPinPU(0, 1);
+    TEST_ASSERT_BITS(0xFFFF, 0x0002, CNPUA);
+}
+
+void test_set_CNPUA15(void){
+    CNPUA = 0x0000;
+    setPinPU(0, 15);
+    TEST_ASSERT_BITS(0xFFFF, 0x8000, CNPUA);
+}
+
+void test_set_multiple_Pins_PU(void){
+    CNPUA = 0x0000;
+    setPinPU(0, 0);
+    setPinPU(0, 1);
+    setPinPU(0, 15);
+    TEST_ASSERT_BITS(0xFFFF, 0x8003, CNPUA);
+}
+
+//----Test Setting Pull Down----//
+// void test_set_CNPDA0(void){
+//     CNPDA = 0xFFFF;
+//     setPinPD(0, 0);
+//     TEST_ASSERT_BITS(0xFFFF, 0xFFFE, CNPDA);
+// }
+//
+// void test_set_CNPUA1(void){
+//     CNPUA = 0xFFFF;
+//     setPinPD(0, 1);
+//     TEST_ASSERT_BITS(0xFFFF, 0xFFFD, CNPDA);
+// }
+//
+// void test_set_CNPUA15(void){
+//     CNPUA = 0xFFFF;
+//     setPinPD(0, 15);
+//     TEST_ASSERT_BITS(0xFFFF, 0x7FFF, CNPDA);
+// }
+//
+// void test_set_multiple_Pins_PD(void){
+//     CNPUA = 0x0000;
+//     setPinPD(0, 0);
+//     setPinPD(0, 1);
+//     setPinPD(0, 15);
+//     TEST_ASSERT_BITS(0xFFFF, 0x7FFC, CNPDA);
+// }
+
+
