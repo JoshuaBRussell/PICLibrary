@@ -1,11 +1,22 @@
 #include "timer_functions.h"
 
 #include <xc.h>
-#include "Timer_Defines.h"
+#include "timer_defines.h"
 #include <stdbool.h>
 
 #define INSTR_CLOCK 3.69E6
 #define NUM_TIMERS 1
+
+#define TIMER_ON_BIT_MASK  0x8000
+#define TIMER_OFF_BIT_MASK 0x0000
+
+#define TIMER_PRE_LOC 0x0030
+#define TIMER_PRE_256_BIT_MASK 0x0030
+#define TIMER_PRE_64_BIT_MASK  0x0020
+#define TIMER_PRE_8_BIT_MASK   0x0010
+#define TIMER_PRE_1_BIT_MASK   0x0000
+
+#define INTERRUPT_PRIOTIY_MAX (7)
 
 uint16_t volatile * const TIMR_ARRY[NUM_TIMERS] = { (uint16_t*)&T2CON};
 
@@ -52,7 +63,7 @@ bool isTimer2Expired(){
     return _T2IF;
 }
 
-bool clearTimer2IntFlag(void){
+void clearTimer2IntFlag(void){
     _T2IF = 0;
 }
 
@@ -61,7 +72,7 @@ void setTimer2IntEn(bool flag){
 }
 
 void setTimer2IntPriority(uint8_t priority){
-    //TODO: Add Interrupt Priority Level Max(this removing this magic number)
-    if(priority > 7) {return;}
+    
+    if(priority > INTERRUPT_PRIOTIY_MAX) {return;}
     _T2IP = priority;
 }

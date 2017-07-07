@@ -1,6 +1,6 @@
 #include "unity.h"
 #include "timer_functions.h"
-#include "Timer_Defines.h"
+#include "timer_defines.h"
 
 #include "xc.h"
 
@@ -48,7 +48,7 @@ void tearDown(void)
 
 }
 
-// ----Test Timer Uitility Functions ----//
+//---- Test Millisecond to Ticks Function ----//
 void test_ms_to_tick(void)
 {    
     uint16_t ticks;
@@ -74,8 +74,9 @@ void test_ms_to_tick(void)
     TEST_ASSERT_EQUAL(57656, ticks);
 }
 
-//----Timer Config Functions----//
 
+
+//---- Test Turn Timer ON ----//
 void test_turn_Timer2_On(void){
 
     TEST_ASSERT_BITS(0xFFFF, 0x0000, T2CON);
@@ -89,6 +90,7 @@ void test_turn_Timer2_On(void){
 
 }
 
+//---- Test Setting the Period Register ----//
 void test_set_Period_Register(void){
     setPeriodTicks(TIMER_2, 0x0000);
     TEST_ASSERT_BITS(0xFFFF, 0x0000, PR2);
@@ -100,7 +102,8 @@ void test_set_Period_Register(void){
     TEST_ASSERT_BITS(0xFFFF, 0xAAAA, PR2);
 }
 
-void test_timer2_expired(void){
+//---- Test Reading/Clearing T2 Interrupt Flag ----//
+void test_Timer2_Expired(void){
     _T2IF = 1;
     TEST_ASSERT_TRUE(isTimer2Expired());
     _T2IF = 0;
@@ -114,7 +117,8 @@ void test_clear_Timer2_Interrupt_Flag(void){
 
 }
 
-void test_set_prescaler_blank_start(void){
+//---- Test Setting Prescaler ----//
+void test_set_Prescaler_Zeroed_Bits(void){
     T2CON = 0x0000;
     setPrescaler(TIMER_2, PRE1);
     TEST_ASSERT_BITS(TIMER_PRE_LOC, 0x0000, T2CON);
@@ -133,7 +137,7 @@ void test_set_prescaler_blank_start(void){
 
 }
 
-void test_set_prescaler_nonblank_start(void){
+void test_set_Prescaler_NonZeroed_Bits(void){
     T2CON = 0x0000;
     setPrescaler(TIMER_2, PRE256);
     TEST_ASSERT_BITS(TIMER_PRE_LOC, TIMER_PRE_256_BIT_MASK, T2CON);
@@ -149,14 +153,15 @@ void test_set_prescaler_nonblank_start(void){
 
 }
 
-void test_enable_timer2_interrupt_low_to_high(void){
+//---- Test Turning On the Timer2 Interrupt ----//
+void test_enable_Timer2_Interrupt_Low_to_High(void){
     _T2IE = 0;
     setTimer2IntEn(true);
     TEST_ASSERT_BIT_HIGH(0, _T2IE);
         
 }
 
-void test_enable_timer2_interrupt_high_to_low(void){
+void test_enable_Timer2_Interrupt_High_to_Low(void){
 
     _T2IE = 1;
     setTimer2IntEn(false);
@@ -164,7 +169,8 @@ void test_enable_timer2_interrupt_high_to_low(void){
 
 }
 
-void test_set_timer2_priority(void){
+//---- Test Setting Timer Priority ----//
+void test_set_Timer2_Priority(void){
     _T2IP = 0;
     setTimer2IntPriority(1);
     TEST_ASSERT_EQUAL(1, _T2IP);
@@ -177,7 +183,7 @@ void test_set_timer2_priority(void){
     
 }
 
-void test_set_timer2_priority_upper_bound(void){
+void test_set_Timer2_Priority_Upper_Bound(void){
     
     _T2IP = 4;
     setTimer2IntPriority(10);
