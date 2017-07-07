@@ -36,7 +36,6 @@ void IO_Config(const PIN_CONFIG * config){
         if(config[pin].Direction == OUTPUT){
             setPinOut(port, pin);
         }
-        //TODO: Implement setPinIn() function
         else if (config[pin].Direction == INPUT){
             //setPinIn(port, pin);
         }
