@@ -28,6 +28,11 @@ uint16_t ms_to_ticks(uint16_t ms, uint16_t pre){
     return (uint16_t)(f_ticks + 0.5);
 }
 
+uint16_t us_to_ticks(uint16_t us, uint16_t pre){
+    float f_ticks = (us*INSTR_CLOCK)/(1000000*pre); 
+    return (uint16_t)(f_ticks + 0.5);
+}
+
 
 void turnTimerOn(Timer_Channel timer){
     *(TIMR_ARRY[timer]) |= TIMER_ON_BIT_MASK; 
