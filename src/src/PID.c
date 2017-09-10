@@ -49,7 +49,9 @@ void PID_Init(PID* pid){
 float Compute(PID* pid, float proc_val){
     float error = pid->setpoint - proc_val;    //Solve for the Error
     float dError = error - pid->prevError;     //Delta Error
+
     pid->prevError = error;                    
-    pid->totalError += error * pid->deltaT;    //Finds integral before multi
-    return pid->Kp*(error) + pid->Ki*(pid->totalError) + pid->Kd*((dError)/pid->deltaT);   
+    pid->totalError = pid->totalError + pid->Ki * error;
+    
+    return pid->Kp*(error) + (pid->totalError) + pid->Kd*((dError)/pid->deltaT);   
 }

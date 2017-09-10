@@ -15,28 +15,28 @@ void test_PID_Init(void){
     PID_Init(&myPID);
 }
 //---- Test Getter Functions ----//
-void test_getKp(void){
+void test_getKp_Default(void){
     PID myPID;
     PID_Init(&myPID);
     TEST_ASSERT_EQUAL(0.0, getKp(&myPID));
 
 }
 
-void test_getKi(void){
+void test_getKi_Default(void){
     PID myPID;
     PID_Init(&myPID);
     TEST_ASSERT_EQUAL(0.0, getKi(&myPID));
 
 }
 
-void test_getKd(void){
+void test_getKd_Default(void){
     PID myPID;
     PID_Init(&myPID);
     TEST_ASSERT_EQUAL(0.0, getKd(&myPID));
 
 }
 
-void test_getSetpoint(void){
+void test_getSetpoint_Default(void){
     PID myPID;
     PID_Init(&myPID);
     TEST_ASSERT_EQUAL(0.0, getSetpoint(&myPID));
@@ -72,8 +72,7 @@ void test_setSetpoint(void){
 //---- Test Various Configs ----//
 void test_Compute_P_Only(void){
     float proc_val = 0.5;
-    float output = 0.0;
-    
+
     PID myPID;
     PID_Init(&myPID);
     setCoeff(&myPID, 1.0, 0.0, 0.0);
@@ -87,7 +86,6 @@ void test_Compute_P_Only(void){
 
 void test_Compute_I_Only(void){
     float proc_val = 0.5;
-    float output = 0.0;
     
     PID myPID;
     PID_Init(&myPID);
@@ -113,7 +111,6 @@ void test_Compute_I_Only(void){
 
 void test_Compute_D_Only(void){
     float proc_val = 0.5;
-    float output = 0.0;
     
     PID myPID;
     PID_Init(&myPID);
