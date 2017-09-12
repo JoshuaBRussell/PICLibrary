@@ -16,6 +16,9 @@ typedef struct{
     
     float totalError;
     float prevError;
+
+    float out_max;
+    float out_min;
 } PID;
 
 //---- Init Function ----//
@@ -32,6 +35,7 @@ float getSetpoint(PID* pid);
 void setCoeff(PID* pid, float P, float I, float D);
 void setSetpoint(PID* pid, float setpoint);
 void setDeltaT(PID* pid, float deltaT);
+void setOutputLimits(PID* pid, float min, float max);
 
 
 float Compute(PID* pid, float Input);
