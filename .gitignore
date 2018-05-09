@@ -23,4 +23,4 @@ rakefile.rb
 /src/src/main.c
 
 #Ignore VS Code Files
-./.vscode
+.vscode/
