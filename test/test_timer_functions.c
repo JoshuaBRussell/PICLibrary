@@ -86,7 +86,7 @@ void test_ms_to_tick(void)
 
 
 
-//---- Test Turn Timer ON ----//
+//---- Test Turn Timers ON ----//
 void test_turn_Timer2_On(void){
 
     TEST_ASSERT_BITS(0xFFFF, 0x0000, T2CON);
@@ -94,14 +94,19 @@ void test_turn_Timer2_On(void){
     turnTimerOn(TIMER_2);
     TEST_ASSERT_BITS(0xFFFF, 0x8000, T2CON);
 
-    T2CON = 0x000A;
-    turnTimerOn(TIMER_2);
-    TEST_ASSERT_BITS(0xFFFF, 0x800A, T2CON);
+}
+
+void test_turn_Timer3_On(void){
+
+    TEST_ASSERT_BITS(0xFFFF, 0x0000, T3CON);
+
+    turnTimerOn(TIMER_3);
+    TEST_ASSERT_BITS(0xFFFF, 0x8000, T3CON);
 
 }
 
-//---- Test Setting the Period Register ----//
-void test_set_Period_Register(void){
+//---- Test Setting the Period Registers ----//
+void test_set_Period_Register_2(void){
     setPeriodTicks(TIMER_2, 0x0000);
     TEST_ASSERT_BITS(0xFFFF, 0x0000, PR2);
 
@@ -110,6 +115,88 @@ void test_set_Period_Register(void){
 
     setPeriodTicks(TIMER_2, 0xAAAA);
     TEST_ASSERT_BITS(0xFFFF, 0xAAAA, PR2);
+}
+
+void test_set_Period_Register_3(void){
+    setPeriodTicks(TIMER_3, 0x0000);
+    TEST_ASSERT_BITS(0xFFFF, 0x0000, PR3);
+
+    setPeriodTicks(TIMER_2, 0xFFFF);
+    TEST_ASSERT_BITS(0xFFFF, 0xFFFF, PR2);
+
+    setPeriodTicks(TIMER_2, 0xAAAA);
+    TEST_ASSERT_BITS(0xFFFF, 0xAAAA, PR2);
+}
+
+//---- Test Setting Prescaler ----//
+void test_set_Prescaler2_Zeroed_Bits(void){
+    T2CON = 0x0000;
+    setPrescaler(TIMER_2, PRE1);
+    TEST_ASSERT_BITS(TIMER_PRE_LOC, 0x0000, T2CON);
+
+    T2CON = 0x0000;
+    setPrescaler(TIMER_2, PRE8);
+    TEST_ASSERT_BITS(TIMER_PRE_LOC, TIMER_PRE_8_BIT_MASK, T2CON);
+
+    T2CON = 0x0000;
+    setPrescaler(TIMER_2, PRE64);
+    TEST_ASSERT_BITS(TIMER_PRE_LOC, TIMER_PRE_64_BIT_MASK, T2CON);
+
+    T2CON = 0x0000;
+    setPrescaler(TIMER_2, PRE256);
+    TEST_ASSERT_BITS(TIMER_PRE_LOC, TIMER_PRE_256_BIT_MASK, T2CON);
+
+}
+
+void test_set_Prescaler3_Zeroed_Bits(void){
+    T3CON = 0x0000;
+    setPrescaler(TIMER_3, PRE1);
+    TEST_ASSERT_BITS(TIMER_PRE_LOC, 0x0000, T3CON);
+
+    T3CON = 0x0000;
+    setPrescaler(TIMER_3, PRE8);
+    TEST_ASSERT_BITS(TIMER_PRE_LOC, TIMER_PRE_8_BIT_MASK, T3CON);
+
+    T3CON = 0x0000;
+    setPrescaler(TIMER_3, PRE64);
+    TEST_ASSERT_BITS(TIMER_PRE_LOC, TIMER_PRE_64_BIT_MASK, T3CON);
+
+    T3CON = 0x0000;
+    setPrescaler(TIMER_3, PRE256);
+    TEST_ASSERT_BITS(TIMER_PRE_LOC, TIMER_PRE_256_BIT_MASK, T3CON);
+
+}
+
+void test_set_Prescaler2_NonZeroed_Bits(void){
+    T2CON = 0x0000;
+    setPrescaler(TIMER_2, PRE256);
+    TEST_ASSERT_BITS(TIMER_PRE_LOC, TIMER_PRE_256_BIT_MASK, T2CON);
+
+    setPrescaler(TIMER_2, PRE64);
+    TEST_ASSERT_BITS(TIMER_PRE_LOC, TIMER_PRE_64_BIT_MASK, T2CON);
+
+    setPrescaler(TIMER_2, PRE8);
+    TEST_ASSERT_BITS(TIMER_PRE_LOC, TIMER_PRE_8_BIT_MASK, T2CON);
+
+    setPrescaler(TIMER_2, PRE1);
+    TEST_ASSERT_BITS(TIMER_PRE_LOC, 0x0000, T2CON);
+
+}
+
+void test_set_Prescaler3_NonZeroed_Bits(void){
+    T3CON = 0x0000;
+    setPrescaler(TIMER_3, PRE256);
+    TEST_ASSERT_BITS(TIMER_PRE_LOC, TIMER_PRE_256_BIT_MASK, T3CON);
+
+    setPrescaler(TIMER_3, PRE64);
+    TEST_ASSERT_BITS(TIMER_PRE_LOC, TIMER_PRE_64_BIT_MASK, T3CON);
+
+    setPrescaler(TIMER_3, PRE8);
+    TEST_ASSERT_BITS(TIMER_PRE_LOC, TIMER_PRE_8_BIT_MASK, T3CON);
+
+    setPrescaler(TIMER_3, PRE1);
+    TEST_ASSERT_BITS(TIMER_PRE_LOC, 0x0000, T3CON);
+
 }
 
 //---- Test Reading/Clearing T2 Interrupt Flag ----//
@@ -127,39 +214,18 @@ void test_clear_Timer2_Interrupt_Flag(void){
 
 }
 
-//---- Test Setting Prescaler ----//
-void test_set_Prescaler_Zeroed_Bits(void){
-    T2CON = 0x0000;
-    setPrescaler(TIMER_2, PRE1);
-    TEST_ASSERT_BITS(TIMER_PRE_LOC, 0x0000, T2CON);
-
-    T2CON = 0x0000;
-    setPrescaler(TIMER_2, PRE8);
-    TEST_ASSERT_BITS(TIMER_PRE_LOC, TIMER_PRE_8_BIT_MASK, T2CON);
-
-    T2CON = 0x0000;
-    setPrescaler(TIMER_2, PRE64);
-    TEST_ASSERT_BITS(TIMER_PRE_LOC, TIMER_PRE_64_BIT_MASK, T2CON);
-
-    T2CON = 0x0000;
-    setPrescaler(TIMER_2, PRE256);
-    TEST_ASSERT_BITS(TIMER_PRE_LOC, TIMER_PRE_256_BIT_MASK, T2CON);
-
+//---- Test Reading/Clearing T3 Interrupt Flag ----//
+void test_Timer3_Expired(void){
+    _T3IF = 1;
+    TEST_ASSERT_TRUE(isTimer3Expired());
+    _T3IF = 0;
+    TEST_ASSERT_FALSE(isTimer3Expired());
 }
 
-void test_set_Prescaler_NonZeroed_Bits(void){
-    T2CON = 0x0000;
-    setPrescaler(TIMER_2, PRE256);
-    TEST_ASSERT_BITS(TIMER_PRE_LOC, TIMER_PRE_256_BIT_MASK, T2CON);
-
-    setPrescaler(TIMER_2, PRE64);
-    TEST_ASSERT_BITS(TIMER_PRE_LOC, TIMER_PRE_64_BIT_MASK, T2CON);
-
-    setPrescaler(TIMER_2, PRE8);
-    TEST_ASSERT_BITS(TIMER_PRE_LOC, TIMER_PRE_8_BIT_MASK, T2CON);
-
-    setPrescaler(TIMER_2, PRE1);
-    TEST_ASSERT_BITS(TIMER_PRE_LOC, 0x0000, T2CON);
+void test_clear_Timer3_Interrupt_Flag(void){
+    _T3IF = 1;
+    clearTimer3IntFlag();
+    TEST_ASSERT_FALSE(isTimer3Expired());
 
 }
 
@@ -179,7 +245,23 @@ void test_enable_Timer2_Interrupt_High_to_Low(void){
 
 }
 
-//---- Test Setting Timer Priority ----//
+//---- Test Turning On the Timer3 Interrupt ----//
+void test_enable_Timer3_Interrupt_Low_to_High(void){
+    _T3IE = 0;
+    setTimer3IntEn(true);
+    TEST_ASSERT_BIT_HIGH(0, _T3IE);
+        
+}
+
+void test_enable_Timer3_Interrupt_High_to_Low(void){
+
+    _T3IE = 1;
+    setTimer3IntEn(false);
+    TEST_ASSERT_BIT_LOW(0, _T3IE);
+
+}
+
+//---- Test Setting Timer2 Interupt Priority ----//
 void test_set_Timer2_Priority(void){
     _T2IP = 0;
     setTimer2IntPriority(1);
@@ -198,6 +280,27 @@ void test_set_Timer2_Priority_Upper_Bound(void){
     _T2IP = 4;
     setTimer2IntPriority(10);
     TEST_ASSERT_EQUAL(4, _T2IP);
+}
+
+//---- Test Setting Timer3 Interupt Priority ----//
+void test_set_Timer3_Priority(void){
+    _T3IP = 0;
+    setTimer3IntPriority(1);
+    TEST_ASSERT_EQUAL(1, _T2IP);
+
+    setTimer2IntPriority(3);
+    TEST_ASSERT_EQUAL(3, _T2IP);
+
+    setTimer2IntPriority(7);
+    TEST_ASSERT_EQUAL(7, _T2IP);
+    
+}
+
+void test_set_Timer3_Priority_Upper_Bound(void){
+    
+    _T3IP = 4;
+    setTimer3IntPriority(10);
+    TEST_ASSERT_EQUAL(4, _T3IP);
 }
 
 
