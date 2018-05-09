@@ -5,7 +5,7 @@
 #include <stdbool.h>
 
 #define INSTR_CLOCK 3.69E6
-#define NUM_TIMERS 1
+#define NUM_TIMERS 2
 
 #define TIMER_ON_BIT_MASK  0x8000
 #define TIMER_OFF_BIT_MASK 0x0000
@@ -18,9 +18,9 @@
 
 #define INTERRUPT_PRIOTIY_MAX (7)
 
-uint16_t volatile * const TIMR_ARRY[NUM_TIMERS] = { (uint16_t*)&T2CON};
+uint16_t volatile * const TIMR_ARRY[NUM_TIMERS] = { (uint16_t*)&T2CON, (uint16_t*)&T3CON};
 
-uint16_t volatile * const PERIOD_ARRY[NUM_TIMERS] = { (uint16_t*)&PR2};
+uint16_t volatile * const PERIOD_ARRY[NUM_TIMERS] = { (uint16_t*)&PR2, (uint16_t*)&PR3};
 
 
 uint16_t ms_to_ticks(uint16_t ms, uint16_t pre){
@@ -68,15 +68,33 @@ bool isTimer2Expired(){
     return _T2IF;
 }
 
+bool isTimer3Expired(){
+    return _T3IF;
+}
+
 void clearTimer2IntFlag(void){
     _T2IF = 0;
+}
+
+void clearTimer3IntFlag(void){
+    _T3IF = 0;
 }
 
 void setTimer2IntEn(bool flag){
     _T2IE = flag;
 }
 
+void setTimer3IntEn(bool flag){
+    _T3IE = flag;
+}
+
 void setTimer2IntPriority(uint8_t priority){
+    
+    if(priority > INTERRUPT_PRIOTIY_MAX) {return;}
+    _T2IP = priority;
+}
+
+void setTimer3IntPriority(uint8_t priority){
     
     if(priority > INTERRUPT_PRIOTIY_MAX) {return;}
     _T2IP = priority;

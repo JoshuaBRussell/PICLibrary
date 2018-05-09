@@ -57,4 +57,24 @@ void setTimer2IntEn(bool bit);
 //are reserved for traps). If attempted the value is set to INTERRUPT_PRIOTIY_MAX
 void setTimer2IntPriority(uint8_t priority);
 
+
+
+//---- Timer 3 Interrupt Functions----//
+
+// Checks if Timer3 has incremented to the value in the PeriodTicks Register.  
+bool isTimer3Expired(void);
+
+//Clears the Timer 3 Interrupt Expiration Flag. This must be cleared for the 
+//interrupt to stop running.
+void clearTimer3IntFlag(void);
+
+//Enables the Timer 3 Interrupt. The Interrupt can never happen if this is not set High.
+void setTimer3IntEn(bool bit);
+
+//Sets the priority for the Timer 3 Interrupt. The value must be greater than 0
+//for the interrupt to run at all. Provides bounds checking. Priority can not be set
+//to a value greater than INTERRUPT_PRIOTIY_MAX(values greater than INTERRUPT_PRIOTIY_MAX
+//are reserved for traps). If attempted the value is set to INTERRUPT_PRIOTIY_MAX
+void setTimer3IntPriority(uint8_t priority);
+
 #endif // _TIMER_FUNCTIONS_H_

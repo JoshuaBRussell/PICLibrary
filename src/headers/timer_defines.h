@@ -4,7 +4,8 @@
 //Used to specify which HW Timer counter to use
 typedef enum
 {
-    TIMER_2 = 0
+    TIMER_2 = 0,
+    TIMER_3
 } Timer_Channel;
 
 //Used to specify which Prescaler value to use.
