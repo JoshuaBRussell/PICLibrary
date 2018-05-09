@@ -128,10 +128,10 @@ void test_Compute_D_Only(void){
 void test_Max_Integral_Limit(void){
     float proc_val = 0.5;
 
-    //----Test Max Output Limit
+    //----Test Max Integral Output Limit----//
     PID aPID;
     PID_Init(&aPID);
-    setCoeff(&aPID, 0.0, 1.0, 0.0);
+    setCoeff(&aPID, 0.0, 1.0, 0.0); //I term is only non-zero term -> Only Integral Tested
     setDeltaT(&aPID, 1.0);
     setSetpoint(&aPID, 1.0);
 
@@ -154,7 +154,7 @@ void test_Min_Integral_Limit(){
 
     PID myPID;
     PID_Init(&myPID);
-    setCoeff(&myPID, 0.0, 1.0, 0.0);
+    setCoeff(&myPID, 0.0, 1.0, 0.0);  //I term is only non-zero term -> Only Integral Tested
     setDeltaT(&myPID, 1.0);
     
     setOutputLimits(&myPID, -1.5, 0.0);
@@ -166,6 +166,39 @@ void test_Min_Integral_Limit(){
     TEST_ASSERT_EQUAL_FLOAT(-1.5, Compute(&myPID, proc_val));
     TEST_ASSERT_EQUAL_FLOAT(-1.5, Compute(&myPID, proc_val));
     TEST_ASSERT_EQUAL_FLOAT(-1.5, Compute(&myPID, proc_val));
+}
+
+void test_Max_Output_Limit(void){
+    float proc_val = 0.5;
+
+    //----Test Max Output Limit----//
+    PID aPID;
+    PID_Init(&aPID);
+    setCoeff(&aPID, 10.0, 0.0, 0.0);
+    setDeltaT(&aPID, 1.0);
+    setSetpoint(&aPID, 1.0);
+
+    setOutputLimits(&aPID, 0.0, 1.5);
+    
+    
+    TEST_ASSERT_EQUAL_FLOAT(1.5, Compute(&aPID, proc_val));
+    
+ 
+}
+
+void test_Min_Output_Limit(){
+    float proc_val = 1.0;
+
+    PID myPID;
+    PID_Init(&myPID);
+    setCoeff(&myPID, 1.0, 0.0, 0.0);
+    setDeltaT(&myPID, 1.0);
+    setSetpoint(&myPID, 0.5);
+    
+    setOutputLimits(&myPID, 0.0, 1.0);
+    
+    TEST_ASSERT_EQUAL_FLOAT(0.0, Compute(&myPID, proc_val));
+
 }
 
 
