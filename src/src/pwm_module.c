@@ -1,6 +1,6 @@
 #include "pwm_module.h"
 
- #include "stdint.h"
+#include "stdint.h"
 #include "xc.h"
 
 #include "timer_defines.h"
@@ -49,4 +49,8 @@ void setHighTime(uint16_t usHigh){
     T2CONbits.TON = 0;
     OC1R = us_to_ticks(usHigh, 8) - 1;    
     T2CONbits.TON = 1;
+}
+
+uint16_t getHighTimeFloat(float input, float max_input, uint16_t us_max_period){
+    return ((uint16_t)((input/max_input) * (float)us_max_period) + 0.5);
 }
