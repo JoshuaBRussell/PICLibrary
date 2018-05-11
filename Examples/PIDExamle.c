@@ -41,23 +41,25 @@
 #pragma config GWRP = OFF               // General Segment Write-Protect bit (General Segment may be written)
 #pragma config GCP = OFF                // General Segment Code-Protect bit (General Segment Code protect is Disabled)
 
+#define motor_voltage 12.0
+#define usPeriod 2000
 PID motor_PID;
 
 int main(){
 
     //Set Debug Pin
-    //setPinOut(1, 7);
+    setPinOut(1, 5);
 
     //Setup Sample Timer
     setPrescaler(TIMER_3, PRE64);
-    setPeriodTicks(TIMER_3, ms_to_ticks(500, 64));
+    setPeriodTicks(TIMER_3, ms_to_ticks(10, 64));
     clearTimer3IntFlag();
     setTimer3IntPriority(1);
     setTimer3IntEn(true);
 
     //Configure PID Settings
     PID_Init(&motor_PID);
-    setCoeff(&motor_PID, 100.0, 0.0, 0.0);
+    setCoeff(&motor_PID, 1.0, 0.0, 0.0);
     setDeltaT(&motor_PID, 0.5);
     setSetpoint(&motor_PID, 1.0);
 
@@ -79,17 +81,17 @@ int main(){
 }
 
 void _ISR _T3Interrupt(void){
-    //_LATB7 = 1;
+    _LATB5 = 1;
 
     //Get Sensor Reading
 
     //Compute Output
-    float control_signal = Compute(&myPID, 0.0);
+    float control_signal = Compute(&motor_PID, 0.0);
 
     //Set Output
-    setHighTime(100);//(uint16_t)control_signal);
+    setHighTime(getHighTimeFloat(3.0, motor_voltage, usPeriod));
     
     
-    //_LATB7 = 0;
+    _LATB5 = 0;
     clearTimer3IntFlag();
 }
