@@ -61,3 +61,7 @@ void setupEncoders(uint16_t port, uint16_t pinA, uint16_t pinB){
     _CNIE = 1;
 }
 
+float getEncoder_Rads_per_sec(float delta_t){
+    return (0.0981)*(getEncoderCount()/delta_t);
+}
+

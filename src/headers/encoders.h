@@ -15,5 +15,7 @@ void setupEncoders(uint16_t port, uint16_t pinA, uint16_t pinB);
 //Returns the value of the current encoder count. 
 int getEncoderCount(void);
 
+float getEncoder_Rads_per_sec(float delta_t);
+
 
 #endif // _ENCODERS_H
