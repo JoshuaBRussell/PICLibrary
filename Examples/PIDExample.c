@@ -11,6 +11,7 @@
 #include "timer_defines.h"
 #include "PID.h"
 #include "pwm_module.h"
+#include "encoders.h"
 
 #pragma config ICS = PGD1               // ICD Communication Channel Select bits (Communicate on PGEC1 and PGED1)
 #pragma config JTAGEN = OFF             // JTAG Enable bit (JTAG is disabled)
@@ -84,12 +85,13 @@ void _ISR _T3Interrupt(void){
     _LATB5 = 1;
 
     //Get Sensor Reading
+    float motor_speed = getEncoder_Rads_per_sec(0.01);
 
     //Compute Output
-    float control_signal = Compute(&motor_PID, 0.0);
+    float control_signal = Compute(&motor_PID, motor_speed);
 
     //Set Output
-    setHighTime(getHighTimeFloat(3.0, motor_voltage, usPeriod));
+    setHighTime(getHighTimeFloat(motor_amplitude, motor_voltage, usPeriod));
     
     
     _LATB5 = 0;
