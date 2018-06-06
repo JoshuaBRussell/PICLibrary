@@ -10,6 +10,8 @@
 
 #define SET_PWM_TO_RB7() (_RP39R = 16) 
 
+//Sets up PWM as singleton TODO: Change to non singleton
+static uint16_t PWM_PERIOD = 2000;
 
 //Sets up Timer2 to be used for the OCx
 void configure_timer(uint16_t us_period){
@@ -51,6 +53,7 @@ void setHighTime(uint16_t usHigh){
     T2CONbits.TON = 1;
 }
 
-uint16_t getHighTimeFloat(float input, float max_input, uint16_t us_max_period){
-    return ((uint16_t)((input/max_input) * (float)us_max_period) + 0.5);
+uint16_t PWM_getPeriod(){
+    return PWM_PERIOD;
 }
+
