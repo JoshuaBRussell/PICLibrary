@@ -35,6 +35,7 @@ bool MOTOR_getDirection(MOTOR* motor);
 
 void MOTOR_setDirection(MOTOR* motor, bool dir);
 
-void MOTOR_setOutput(float motor_voltage);
+//Takes sign and magnitude of input and applies it to motor driver electronics
+void MOTOR_setOutput(MOTOR* motor, float motor_voltage);
 
 #endif // _MOTOR_DRIVER_H_
