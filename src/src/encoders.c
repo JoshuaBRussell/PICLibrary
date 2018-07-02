@@ -8,8 +8,9 @@
 
 //#define PINS_SEL_BIT_MASK 0x00060
 
-//TODO: Move these into an Encoder_Data struct. This will make it more modular, and allow for multiple encoders. 
-static int enc_count = 0;
+//TODO: Move these into an Encoder_Data struct. This will make it more modular, and allow for multiple encoders.
+volatile static long prev_enc_count = 0; 
+volatile static long enc_count = 0;
 static uint16_t PINS_SEL_BIT_MASK = 0x0000;
 
 //Selects whether to increment/decrement the encoder count depending on the state change of the encoder. 
@@ -59,5 +60,11 @@ void setupEncoders(uint16_t port, uint16_t pinA, uint16_t pinB){
     _CNIF = 0;
     _CNIP = 2;
     _CNIE = 1;
+}
+
+float getEncoder_Rads_per_sec(float delta_t_sec){
+    long delta_ticks = (enc_count - prev_enc_count);
+    prev_enc_count = enc_count;
+    return (TICKS_TO_RADS_SF/delta_t_sec)*(float)delta_ticks; 
 }
 

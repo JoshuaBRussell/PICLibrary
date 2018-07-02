@@ -1,6 +1,6 @@
 #include "pwm_module.h"
 
- #include "stdint.h"
+#include "stdint.h"
 #include "xc.h"
 
 #include "timer_defines.h"
@@ -10,6 +10,8 @@
 
 #define SET_PWM_TO_RB7() (_RP39R = 16) 
 
+//Sets up PWM as singleton TODO: Change to non singleton
+static uint16_t PWM_PERIOD = 2000;
 
 //Sets up Timer2 to be used for the OCx
 void configure_timer(uint16_t us_period){
@@ -50,3 +52,8 @@ void setHighTime(uint16_t usHigh){
     OC1R = us_to_ticks(usHigh, 8) - 1;    
     T2CONbits.TON = 1;
 }
+
+uint16_t PWM_getPeriod(){
+    return PWM_PERIOD;
+}
+
