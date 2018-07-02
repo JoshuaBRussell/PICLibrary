@@ -34,6 +34,7 @@
     - test/support
   :include:
     - "/opt/microchip/xc16/v1.26/support/dsPIC33E/h/"
+    - "/opt/microchip/xc16/v1.26/support/generic/h/"
     - src/headers/**
 
 :defines:
@@ -43,6 +44,7 @@
   :commmon: &common_defines
     - __dsPIC33EP128GP502__
     - UNITY_INT_WIDTH=16
+    - UNITY_POINTER_WIDTH=16
     - CMOCK_MEM_INDEX_TYPE=uint16_t
     - CMOCK_MEM_PTR_AS_INT=uint16_t
     - CMOCK_MEM_ALIGN=1

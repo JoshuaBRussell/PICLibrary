@@ -10,5 +10,17 @@ rakefile.rb
 #Ignore the support material for the test dir
 ./test/support
 
+#Ignore the simulation files
+/test/simulation/out.txt
+
 #Ignore Ceedling Files
 **/vendor
+
+#Ignore Docs Folder
+**/Docs
+
+#Ignore main() file
+/src/src/main.c
+
+#Ignore VS Code Files
+.vscode/
