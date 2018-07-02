@@ -18,3 +18,8 @@ I am using the dsPIC33EP128GP502 microcontroller.
 
 **With this being said, the main goal for all of this is to _learn_** The code is likely to change often, and will probably have sections of poorly written code...*initially*. 
 
+
+**Update (07/02/18):**
+
+PIDExample.c shows how to set up a working PID controller that is able to control the speed of a DC motor. The code needs refactoring and test code needs to be wrapped around everything along with some other misc. changes. After those changes are in effect, other performance improving code will be added. 
+
