@@ -6,9 +6,7 @@
 #include "xc.h"
 #include "main.h"
 #include "IO_Functions.h"
-#include "IO_Defines.h"
 #include "timer_functions.h"
-#include "timer_defines.h"
 #include "PID.h"
 #include "pwm_module.h"
 #include "encoders.h"
@@ -51,10 +49,10 @@ int main(){
 
     //Configure PID Settings
     PID_Init(&motor_PID);
-    setCoeff(&motor_PID, 0.0, 0.01, 0.0);
+    setCoeff(&motor_PID, 0.2, 0.01, 0.0);
     setDeltaT(&motor_PID, 0.01);
     setOutputLimits(&motor_PID, -MOTOR_VOLTAGE, MOTOR_VOLTAGE);
-    setSetpoint(&motor_PID, 550.0);
+    setSetpoint(&motor_PID, 450.0);
 
     //Makes sure that Timer2 is Off(used for PWM)
     T2CONbits.TON = 0;
