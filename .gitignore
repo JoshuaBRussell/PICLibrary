@@ -19,8 +19,5 @@ rakefile.rb
 #Ignore Docs Folder
 **/Docs
 
-#Ignore main() file
-/src/src/main.c
-
 #Ignore VS Code Files
 .vscode/
