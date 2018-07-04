@@ -1,31 +1,57 @@
 #ifndef _TIMER_FUNCTIONS_H_
 #define _TIMER_FUNCTIONS_H_
 
+/*----------------------------------------------------------------------------//
+// Timer_Functions: Used to configure various timer peripherals and their 
+// associated intterupts. 
+//----------------------------------------------------------------------------*/
 
-#include "timer_defines.h"
 #include <stdint.h>
 #include <stdbool.h>
 
+/*----------------------------------------------------------------------------//
+// Defines
+//----------------------------------------------------------------------------*/
 
 
-//----------------------------------------------------------------------------//
+/*----------------------------------------------------------------------------//
+// Enums
+//----------------------------------------------------------------------------*/
+//Used to specify which HW Timer counter to use
+typedef enum
+{
+    TIMER_2 = 0,
+    TIMER_3
+} Timer_Channel;
+
+//Used to specify which Prescaler value to use.
+typedef enum
+{
+    PRE1 = 0,
+    PRE8 = 1,
+    PRE64 = 2,
+    PRE256 = 3
+} PRE_SEL;
+
+
+/*----------------------------------------------------------------------------//
 //    Timer Utility Functions:                                                //
 //                                                                            //
 //    These functions are useful for generic timing issues, such as           //
 //    converting milliseconds to a register tick count.                       //
 //                                                                            //
-//----------------------------------------------------------------------------//
+//----------------------------------------------------------------------------*/
 uint16_t ms_to_ticks(uint16_t ms, uint16_t pre);
 
 uint16_t us_to_ticks(uint16_t ms, uint16_t pre);
 
 
-//----------------------------------------------------------------------------//
+/*----------------------------------------------------------------------------//
 //    Timer Config Functions:                                                 //
 //                                                                            //
 //    Functions for configuring the HW timer such as                          //
 //    the period length, prescaler, and the associated interrupt flags.       //
-//----------------------------------------------------------------------------//
+//----------------------------------------------------------------------------*/
 
 // Starts a timer. Which timer is chosen by TimerChannel 
 void turnTimerOn(Timer_Channel timer);
@@ -56,8 +82,6 @@ void setTimer2IntEn(bool bit);
 //to a value greater than INTERRUPT_PRIOTIY_MAX(values greater than INTERRUPT_PRIOTIY_MAX
 //are reserved for traps). If attempted the value is set to INTERRUPT_PRIOTIY_MAX
 void setTimer2IntPriority(uint8_t priority);
-
-
 
 //---- Timer 3 Interrupt Functions----//
 
