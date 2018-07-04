@@ -1,7 +1,6 @@
 #include "timer_functions.h"
 
 #include <xc.h>
-#include "timer_defines.h"
 #include <stdbool.h>
 
 #define INSTR_CLOCK 3.69E6

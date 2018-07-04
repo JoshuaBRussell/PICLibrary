@@ -2,8 +2,6 @@
 
 #include "stdint.h"
 #include "xc.h"
-
-#include "timer_defines.h"
 #include "timer_functions.h"
 
 #include "IO_Functions.h"
