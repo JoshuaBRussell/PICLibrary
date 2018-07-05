@@ -18,28 +18,28 @@ void test_PID_Init(void){
 void test_getKp_Default(void){
     PID myPID;
     PID_Init(&myPID);
-    TEST_ASSERT_EQUAL(0.0, getKp(&myPID));
+    TEST_ASSERT_EQUAL(0.0, PID_getKp(&myPID));
 
 }
 
 void test_getKi_Default(void){
     PID myPID;
     PID_Init(&myPID);
-    TEST_ASSERT_EQUAL(0.0, getKi(&myPID));
+    TEST_ASSERT_EQUAL(0.0, PID_getKi(&myPID));
 
 }
 
 void test_getKd_Default(void){
     PID myPID;
     PID_Init(&myPID);
-    TEST_ASSERT_EQUAL(0.0, getKd(&myPID));
+    TEST_ASSERT_EQUAL(0.0, PID_getKd(&myPID));
 
 }
 
 void test_getSetpoint_Default(void){
     PID myPID;
     PID_Init(&myPID);
-    TEST_ASSERT_EQUAL(0.0, getSetpoint(&myPID));
+    TEST_ASSERT_EQUAL(0.0, PID_getSetpoint(&myPID));
 
 }
 
@@ -51,11 +51,11 @@ void test_setCoeff(void){
     float I = 3.5;
     float D = 6.4;
 
-    setCoeff(&myPID, P, I, D);
+    PID_setCoeff(&myPID, P, I, D);
 
-    TEST_ASSERT_EQUAL(P, getKp(&myPID));
-    TEST_ASSERT_EQUAL(I, getKi(&myPID));
-    TEST_ASSERT_EQUAL(D, getKd(&myPID));
+    TEST_ASSERT_EQUAL(P, PID_getKp(&myPID));
+    TEST_ASSERT_EQUAL(I, PID_getKi(&myPID));
+    TEST_ASSERT_EQUAL(D, PID_getKd(&myPID));
 
 }
 
@@ -63,10 +63,10 @@ void test_setSetpoint(void){
     PID myPID;
     PID_Init(&myPID);
 
-    TEST_ASSERT_EQUAL_FLOAT(0.0, getSetpoint(&myPID));
+    TEST_ASSERT_EQUAL_FLOAT(0.0, PID_getSetpoint(&myPID));
 
-    setSetpoint(&myPID, 1.0);
-    TEST_ASSERT_EQUAL_FLOAT(1.0, getSetpoint(&myPID));
+    PID_setSetpoint(&myPID, 1.0);
+    TEST_ASSERT_EQUAL_FLOAT(1.0, PID_getSetpoint(&myPID));
 }
 
 //---- Test Various Configs ----//
@@ -75,12 +75,12 @@ void test_Compute_P_Only(void){
 
     PID myPID;
     PID_Init(&myPID);
-    setCoeff(&myPID, 1.0, 0.0, 0.0);
+    PID_setCoeff(&myPID, 1.0, 0.0, 0.0);
     
-    TEST_ASSERT_EQUAL_FLOAT(-0.5, Compute(&myPID, proc_val));
+    TEST_ASSERT_EQUAL_FLOAT(-0.5, PID_Compute(&myPID, proc_val));
 
-    setSetpoint(&myPID, 1.0);
-    TEST_ASSERT_EQUAL_FLOAT(0.5, Compute(&myPID, proc_val));
+    PID_setSetpoint(&myPID, 1.0);
+    TEST_ASSERT_EQUAL_FLOAT(0.5, PID_Compute(&myPID, proc_val));
 
 }
 
@@ -89,22 +89,22 @@ void test_Compute_I_Only(void){
     
     PID myPID;
     PID_Init(&myPID);
-    setCoeff(&myPID, 0.0, 1.0, 0.0);
-    setDeltaT(&myPID, 1.0);
+    PID_setCoeff(&myPID, 0.0, 1.0, 0.0);
+    PID_setDeltaT(&myPID, 1.0);
     
-    TEST_ASSERT_EQUAL_FLOAT(-0.5, Compute(&myPID, proc_val));
-    TEST_ASSERT_EQUAL_FLOAT(-1.0, Compute(&myPID, proc_val));
-    TEST_ASSERT_EQUAL_FLOAT(-1.5, Compute(&myPID, proc_val));
+    TEST_ASSERT_EQUAL_FLOAT(-0.5, PID_Compute(&myPID, proc_val));
+    TEST_ASSERT_EQUAL_FLOAT(-1.0, PID_Compute(&myPID, proc_val));
+    TEST_ASSERT_EQUAL_FLOAT(-1.5, PID_Compute(&myPID, proc_val));
 
     PID aPID;
     PID_Init(&aPID);
-    setCoeff(&aPID, 0.0, 1.0, 0.0);
-    setDeltaT(&aPID, 1.0);
-    setSetpoint(&aPID, 1.0);
+    PID_setCoeff(&aPID, 0.0, 1.0, 0.0);
+    PID_setDeltaT(&aPID, 1.0);
+    PID_setSetpoint(&aPID, 1.0);
     
-    TEST_ASSERT_EQUAL_FLOAT(0.5, Compute(&aPID, proc_val));
-    TEST_ASSERT_EQUAL_FLOAT(1.0, Compute(&aPID, proc_val));
-    TEST_ASSERT_EQUAL_FLOAT(1.5, Compute(&aPID, proc_val));
+    TEST_ASSERT_EQUAL_FLOAT(0.5, PID_Compute(&aPID, proc_val));
+    TEST_ASSERT_EQUAL_FLOAT(1.0, PID_Compute(&aPID, proc_val));
+    TEST_ASSERT_EQUAL_FLOAT(1.5, PID_Compute(&aPID, proc_val));
 
 
 }
@@ -114,14 +114,14 @@ void test_Compute_D_Only(void){
     
     PID myPID;
     PID_Init(&myPID);
-    setCoeff(&myPID, 0.0, 0.0, 1.0);
-    setDeltaT(&myPID, 1.0);
-    setSetpoint(&myPID, 1.0);
+    PID_setCoeff(&myPID, 0.0, 0.0, 1.0);
+    PID_setDeltaT(&myPID, 1.0);
+    PID_setSetpoint(&myPID, 1.0);
 
-    TEST_ASSERT_EQUAL_FLOAT(0.5, Compute(&myPID, proc_val));
+    TEST_ASSERT_EQUAL_FLOAT(0.5, PID_Compute(&myPID, proc_val));
 
     proc_val = 0.75;
-    TEST_ASSERT_EQUAL_FLOAT(-0.25, Compute(&myPID, proc_val));
+    TEST_ASSERT_EQUAL_FLOAT(-0.25, PID_Compute(&myPID, proc_val));
 
 }
 
@@ -131,21 +131,21 @@ void test_Max_Integral_Limit(void){
     //----Test Max Integral Output Limit----//
     PID aPID;
     PID_Init(&aPID);
-    setCoeff(&aPID, 0.0, 1.0, 0.0); //I term is only non-zero term -> Only Integral Tested
-    setDeltaT(&aPID, 1.0);
-    setSetpoint(&aPID, 1.0);
+    PID_setCoeff(&aPID, 0.0, 1.0, 0.0); //I term is only non-zero term -> Only Integral Tested
+    PID_setDeltaT(&aPID, 1.0);
+    PID_setSetpoint(&aPID, 1.0);
 
-    setOutputLimits(&aPID, 0.0, 1.5);
+    PID_setOutputLimits(&aPID, 0.0, 1.5);
     
     //Integral Winds Up
-    TEST_ASSERT_EQUAL_FLOAT(0.5, Compute(&aPID, proc_val));
-    TEST_ASSERT_EQUAL_FLOAT(1.0, Compute(&aPID, proc_val));
-    TEST_ASSERT_EQUAL_FLOAT(1.5, Compute(&aPID, proc_val));
+    TEST_ASSERT_EQUAL_FLOAT(0.5, PID_Compute(&aPID, proc_val));
+    TEST_ASSERT_EQUAL_FLOAT(1.0, PID_Compute(&aPID, proc_val));
+    TEST_ASSERT_EQUAL_FLOAT(1.5, PID_Compute(&aPID, proc_val));
 
     //Integral is Limited
-    TEST_ASSERT_EQUAL_FLOAT(1.5, Compute(&aPID, proc_val));
-    TEST_ASSERT_EQUAL_FLOAT(1.5, Compute(&aPID, proc_val));
-    TEST_ASSERT_EQUAL_FLOAT(1.5, Compute(&aPID, proc_val));
+    TEST_ASSERT_EQUAL_FLOAT(1.5, PID_Compute(&aPID, proc_val));
+    TEST_ASSERT_EQUAL_FLOAT(1.5, PID_Compute(&aPID, proc_val));
+    TEST_ASSERT_EQUAL_FLOAT(1.5, PID_Compute(&aPID, proc_val));
  
 }
 
@@ -154,18 +154,18 @@ void test_Min_Integral_Limit(){
 
     PID myPID;
     PID_Init(&myPID);
-    setCoeff(&myPID, 0.0, 1.0, 0.0);  //I term is only non-zero term -> Only Integral Tested
-    setDeltaT(&myPID, 1.0);
+    PID_setCoeff(&myPID, 0.0, 1.0, 0.0);  //I term is only non-zero term -> Only Integral Tested
+    PID_setDeltaT(&myPID, 1.0);
     
-    setOutputLimits(&myPID, -1.5, 0.0);
+    PID_setOutputLimits(&myPID, -1.5, 0.0);
     
-    TEST_ASSERT_EQUAL_FLOAT(-0.5, Compute(&myPID, proc_val));
-    TEST_ASSERT_EQUAL_FLOAT(-1.0, Compute(&myPID, proc_val));
-    TEST_ASSERT_EQUAL_FLOAT(-1.5, Compute(&myPID, proc_val));
+    TEST_ASSERT_EQUAL_FLOAT(-0.5, PID_Compute(&myPID, proc_val));
+    TEST_ASSERT_EQUAL_FLOAT(-1.0, PID_Compute(&myPID, proc_val));
+    TEST_ASSERT_EQUAL_FLOAT(-1.5, PID_Compute(&myPID, proc_val));
 
-    TEST_ASSERT_EQUAL_FLOAT(-1.5, Compute(&myPID, proc_val));
-    TEST_ASSERT_EQUAL_FLOAT(-1.5, Compute(&myPID, proc_val));
-    TEST_ASSERT_EQUAL_FLOAT(-1.5, Compute(&myPID, proc_val));
+    TEST_ASSERT_EQUAL_FLOAT(-1.5, PID_Compute(&myPID, proc_val));
+    TEST_ASSERT_EQUAL_FLOAT(-1.5, PID_Compute(&myPID, proc_val));
+    TEST_ASSERT_EQUAL_FLOAT(-1.5, PID_Compute(&myPID, proc_val));
 }
 
 void test_Max_Output_Limit(void){
@@ -174,14 +174,14 @@ void test_Max_Output_Limit(void){
     //----Test Max Output Limit----//
     PID aPID;
     PID_Init(&aPID);
-    setCoeff(&aPID, 10.0, 0.0, 0.0);
-    setDeltaT(&aPID, 1.0);
-    setSetpoint(&aPID, 1.0);
+    PID_setCoeff(&aPID, 10.0, 0.0, 0.0);
+    PID_setDeltaT(&aPID, 1.0);
+    PID_setSetpoint(&aPID, 1.0);
 
-    setOutputLimits(&aPID, 0.0, 1.5);
+    PID_setOutputLimits(&aPID, 0.0, 1.5);
     
     
-    TEST_ASSERT_EQUAL_FLOAT(1.5, Compute(&aPID, proc_val));
+    TEST_ASSERT_EQUAL_FLOAT(1.5, PID_Compute(&aPID, proc_val));
     
  
 }
@@ -191,13 +191,13 @@ void test_Min_Output_Limit(){
 
     PID myPID;
     PID_Init(&myPID);
-    setCoeff(&myPID, 1.0, 0.0, 0.0);
-    setDeltaT(&myPID, 1.0);
-    setSetpoint(&myPID, 0.5);
+    PID_setCoeff(&myPID, 1.0, 0.0, 0.0);
+    PID_setDeltaT(&myPID, 1.0);
+    PID_setSetpoint(&myPID, 0.5);
     
-    setOutputLimits(&myPID, 0.0, 1.0);
+    PID_setOutputLimits(&myPID, 0.0, 1.0);
     
-    TEST_ASSERT_EQUAL_FLOAT(0.0, Compute(&myPID, proc_val));
+    TEST_ASSERT_EQUAL_FLOAT(0.0, PID_Compute(&myPID, proc_val));
 
 }
 

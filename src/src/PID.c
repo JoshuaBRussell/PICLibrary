@@ -1,37 +1,41 @@
 #include "PID.h"
 
+/*----------------------------------------------------------------------------//
+// PID Implementation 
+//----------------------------------------------------------------------------*/
 
-float getKp(PID* pid){
+
+float PID_getKp(PID* pid){
     return pid->Kp;
 }
 
-float getKi(PID* pid){
+float PID_getKi(PID* pid){
     return pid->Ki;
 }
 
-float getKd(PID* pid){
+float PID_getKd(PID* pid){
     return pid->Kd;
 }
 
-float getSetpoint(PID* pid){
+float PID_getSetpoint(PID* pid){
     return pid->setpoint;
 }
 
-void setCoeff(PID* pid, float P, float I, float D){
+void PID_setCoeff(PID* pid, float P, float I, float D){
     pid->Kp = P;
     pid->Ki = I;
     pid->Kd = D;
 }
 
-void setSetpoint(PID* pid, float setpoint){
+void PID_setSetpoint(PID* pid, float setpoint){
     pid->setpoint = setpoint;
 }
 
-void setDeltaT(PID* pid, float deltaT){
+void PID_setDeltaT(PID* pid, float deltaT){
     pid->deltaT = deltaT;
 }
 
-void setOutputLimits(PID* pid, float min, float max){
+void PID_setOutputLimits(PID* pid, float min, float max){
     pid->out_min = min;
     pid->out_max = max;
 }
@@ -54,7 +58,7 @@ void PID_Init(PID* pid){
 
 }
 
-float Compute(PID* pid, float proc_val){
+float PID_Compute(PID* pid, float proc_val){
     float error = pid->setpoint - proc_val;    //Solve for the Error
     float dError = error - pid->prevError;     //Delta Error
 
