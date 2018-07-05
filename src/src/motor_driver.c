@@ -5,6 +5,10 @@
 #include <stdbool.h>
 #include <math.h>
 
+/*----------------------------------------------------------------------------//
+// PID Implementation 
+//----------------------------------------------------------------------------*/
+
 //Helper function that converts a float input with an expected float max value to a proportional high time 
 //for the PWM. 
 static uint16_t getPWM_High_Time_from_Float(float input, float max_input, uint16_t us_max_period){
