@@ -14,8 +14,10 @@
   :test_file_prefix: test_
 
 :release_build:
- :output: PICLib.out
+ :output: PICLib
  :use_assembly: FALSE
+ :artifacts:
+    - build/release/Build.hex
 
 :environment:
 
@@ -136,7 +138,7 @@
     :arguments:
       - -mcpu=33EP128GP502
       - ${1}
-      - -o "./build/release/Build.out"
+      - -o "./build/release/Build.hex"
       - -omf=elf
       - -DXPRJ_default=default
       - -legacy-libc
