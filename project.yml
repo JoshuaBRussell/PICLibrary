@@ -136,7 +136,7 @@
     :arguments:
       - -mcpu=33EP128GP502
       - ${1}
-      - -o "./build/release/Build.out"
+      - -o "./build/release/Build.hex"
       - -omf=elf
       - -DXPRJ_default=default
       - -legacy-libc
