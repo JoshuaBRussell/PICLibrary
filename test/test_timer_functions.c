@@ -1,6 +1,5 @@
 #include "unity.h"
 #include "timer_functions.h"
-#include "timer_defines.h"
 
 #include "xc.h"
 
