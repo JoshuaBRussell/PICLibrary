@@ -14,8 +14,10 @@
   :test_file_prefix: test_
 
 :release_build:
- :output: PICLib.out
+ :output: PICLib
  :use_assembly: FALSE
+ :artifacts:
+    - build/release/Build.hex
 
 :environment:
 
