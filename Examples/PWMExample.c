@@ -2,9 +2,7 @@
 #include "xc.h"
 #include "main.h"
 #include "IO_Functions.h"
-#include "IO_Defines.h"
 #include "timer_functions.h"
-#include "timer_defines.h"
 #include "pwm_module.h"
 #include "stdint.h"
 
