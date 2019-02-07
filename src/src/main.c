@@ -16,9 +16,11 @@ int main(){
     T2CONbits.TON = 0;
 
     PWM_Init(7, usPeriod);
+
+    //Output starts on first call
     PWM_setHighTime(timeHigh);
     
-    startPWM();
+    //startPWM();
     
     while(1){
     
