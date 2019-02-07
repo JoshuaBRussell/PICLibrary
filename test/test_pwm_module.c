@@ -18,9 +18,10 @@ void test_PWM_getPeriod(){
     
 }
 
-// void test_set_OSCON(void)
-// {
-//     OC1R = 0x5000;
-//     TEST_ASSERT_BITS(0xFFFF, 0x5000, OC1R); 
-// }
 
+
+void test_PWM_setHighTime(){
+    PWM_Init(0, 2000);
+    startPWM();
+    PWM_setHighTime(1000);
+}

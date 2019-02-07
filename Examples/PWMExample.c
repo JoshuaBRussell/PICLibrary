@@ -15,7 +15,7 @@ int main(){
     T2CONbits.TON = 0;
 
     PWM_Init(7, usPeriod);
-    setHighTime(timeHigh);
+    PWM_setHighTime(timeHigh);
     
     startPWM();
     

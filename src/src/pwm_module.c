@@ -45,7 +45,7 @@ void startPWM(){
     T2CONbits.TON = 1;
 }
 
-void setHighTime(uint16_t usHigh){
+void PWM_setHighTime(uint16_t usHigh){
     T2CONbits.TON = 0;
     OC1R = us_to_ticks(usHigh, 8) - 1;    
     T2CONbits.TON = 1;
