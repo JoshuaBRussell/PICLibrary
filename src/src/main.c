@@ -5,8 +5,8 @@
 #include "pwm_module.h"
 #include "stdint.h"
 
-#define usPeriod 2000
-#define timeHigh 1700
+#define usPeriod 3450
+#define timeHigh 1500
 
 
 int main(){
