@@ -30,9 +30,6 @@ uint16_t volatile * const OCxR_ARRY[NUM_PORTS] = { (uint16_t*)&OC1R};
 uint16_t volatile * const OCxRS_ARRY[NUM_PORTS] = { (uint16_t*)&OC1RS};
 
 
-//Sets up PWM as singleton TODO: Change to non singleton
-static uint16_t PWM_PERIOD = 2000;
-
 void PWM_setOCCON1(PWM_Channel pwm_sel, uint16_t reg_val){
     *(OCxCON1_ARRY[pwm_sel]) = reg_val;
 }
@@ -81,7 +78,7 @@ void PWM_setHighTime(uint16_t usHigh){
     PWM_setOCR(PWM_0, us_to_ticks(usHigh, 1)); //pre = 1 -> no prescale  
 }
 
-uint16_t PWM_getPeriod(){
-    return PWM_PERIOD;
+uint16_t PWM_getPeriod(PWM_Channel pwm_sel){
+    return *(OCxRS_ARRY[pwm_sel]);
 }
 

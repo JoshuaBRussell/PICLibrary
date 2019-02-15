@@ -19,7 +19,9 @@ void tearDown(void)
 
 void test_PWM_getPeriod(){
     PWM_Init(0, 2000);
-    TEST_ASSERT_EQUAL_UINT16(2000, PWM_getPeriod());
+
+    PWM_setOCRS(PWM_0, 0x1234);
+    TEST_ASSERT_EQUAL_UINT16(0x1234, PWM_getPeriod(PWM_0));
     
 }
 
