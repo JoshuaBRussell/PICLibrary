@@ -5,21 +5,24 @@
 #include "pwm_module.h"
 #include "stdint.h"
 
-#define usPeriod 3450
-#define timeHigh 1500
+#define usPeriod 4450
+#define timeHigh1 1340
+#define timeHigh2 2000
 
 
 int main(){
 
-
-    //Makes sure that Timer is Off
-    T2CONbits.TON = 0;
-
+    setPinOut(2, 5);
     PWM_Init(7, usPeriod);
 
     //Output starts on first call
-    PWM_setHighTime(timeHigh);
-    
+    togglePin(2, 5);
+    PWM_setHighTime(timeHigh1);
+
+    int i = 0;
+    while (i < 50){i++;}
+    togglePin(2,5);
+    PWM_setHighTime(timeHigh2);
     //startPWM();
     
     while(1){
