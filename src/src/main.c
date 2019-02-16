@@ -12,16 +12,16 @@
 
 int main(){
 
-    setPinOut(2, 5);
+    IO_setPinOut(2, 5);
     PWM_Init(7, usPeriod);
 
     //Output starts on first call
-    togglePin(2, 5);
+    IO_togglePin(2, 5);
     PWM_setHighTime(timeHigh1);
 
     int i = 0;
     while (i < 50){i++;}
-    togglePin(2,5);
+    IO_togglePin(2,5);
     PWM_setHighTime(timeHigh2);
     //startPWM();
     
