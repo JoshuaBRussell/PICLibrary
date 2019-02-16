@@ -42,19 +42,18 @@ int getTransistionTable(int index){
     return transistion_table[index];
 }
 
-int getEncoderCount(){
+int ENC_getEncoderCount(){
     return enc_count;
 }
 
-void setupEncoders(uint16_t port, uint16_t pinA, uint16_t pinB){
-    ANSELB = ~(PINS_SEL_BIT_MASK & ANSELB);
-
+void ENC_setupEncoders(PORT_Channel port, PIN_Channel pinA, PIN_Channel pinB){
     PINS_SEL_BIT_MASK = (0x0001 << pinA) | (0x0001 << pinB);
+    ANSELB = ~(PINS_SEL_BIT_MASK & ANSELB);
     
     //Interrupt Pin Selection
-    setPinIn(port, pinA);
-    setPinIn(port, pinB);
-    CNENB = PINS_SEL_BIT_MASK; 
+    IO_setPinIn(port, pinA);
+    IO_setPinIn(port, pinB);
+    CNENB = (PINS_SEL_BIT_MASK | CNENB); 
     
     //Interrupt Setup
     _CNIF = 0;
@@ -62,7 +61,7 @@ void setupEncoders(uint16_t port, uint16_t pinA, uint16_t pinB){
     _CNIE = 1;
 }
 
-float getEncoder_Rads_per_sec(float delta_t_sec){
+float ENC_getEncoder_Rads_per_sec(float delta_t_sec){
     long delta_ticks = (enc_count - prev_enc_count);
     prev_enc_count = enc_count;
     return (TICKS_TO_RADS_SF/delta_t_sec)*(float)delta_ticks; 

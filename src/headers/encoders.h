@@ -17,12 +17,12 @@
 
 //Initialize Encoders. Currently Pins must be on the same port and must be consecutive 
 //to one another (e.g. pins 5/6). 
-void setupEncoders(uint16_t port, uint16_t pinA, uint16_t pinB);
+void ENC_setupEncoders(uint16_t port, uint16_t pinA, uint16_t pinB);
 
 //Returns the value of the current encoder count. 
-int getEncoderCount(void);
+int ENC_getEncoderCount(void);
 
-float getEncoder_Rads_per_sec(float delta_t_sec);
+float ENC_getEncoder_Rads_per_sec(float delta_t_sec);
 
 
 #endif // _ENCODERS_H
