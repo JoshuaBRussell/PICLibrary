@@ -2,9 +2,7 @@
 #include "xc.h"
 #include "main.h"
 #include "IO_Functions.h"
-#include "IO_Defines.h"
 #include "timer_functions.h"
-#include "timer_defines.h"
 #include "pwm_module.h"
 #include "stdint.h"
 
@@ -17,7 +15,7 @@ int main(){
     T2CONbits.TON = 0;
 
     PWM_Init(7, usPeriod);
-    setHighTime(timeHigh);
+    PWM_setHighTime(timeHigh);
     
     startPWM();
     

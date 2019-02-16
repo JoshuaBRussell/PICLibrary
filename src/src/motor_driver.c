@@ -57,5 +57,5 @@ void MOTOR_setOutput(MOTOR* motor, float motor_voltage){
     MOTOR_setDirection(motor, signbit(motor_voltage));
 
     //Set Output
-    setHighTime(((uint16_t)((fabs(motor_voltage)/motor->max_voltage) * (float)PWM_getPeriod()) + 0.5));//getPWM_High_Time_from_Float(motor_voltage, motor->max_voltage, PWM_getPeriod()));
+    PWM_setHighTime(((uint16_t)((fabs(motor_voltage)/motor->max_voltage) * (float)PWM_getPeriod()) + 0.5));//getPWM_High_Time_from_Float(motor_voltage, motor->max_voltage, PWM_getPeriod()));
 }

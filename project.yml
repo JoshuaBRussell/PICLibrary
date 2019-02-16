@@ -111,7 +111,7 @@
     :name: "Microchip simulator test fixture"
     :stderr_redirect: :auto #inform Ceedling what model of $stderr capture to use
     :arguments:
-      - test/simulation/sim_test_fixture.rb
+      - test/simulation/sim_test_fixture_mdb.rb
 
   :release_compiler:
     :executable: xc16-gcc
