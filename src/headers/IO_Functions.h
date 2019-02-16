@@ -32,39 +32,44 @@
 //Enum for the various pins
 typedef enum
 {
-    Pin_A0,
-    Pin_A1,
-    Pin_A2,
-    Pin_A3,
-    Pin_A4,
-    Pin_A5,
-    Pin_A6,
-    Pin_A7,
-    Pin_A8,
-    Pin_A9,
-    Pin_A10,
-    Pin_A11,
-    Pin_A12,
-    Pin_A13,
-    Pin_A14,
-    Pin_A15,
-    Pin_B0,
-    Pin_B1,
-    Pin_B2,
-    Pin_B3,
-    Pin_B4,
-    Pin_B5,
-    Pin_B6,
-    Pin_B7,
-    Pin_B8,
-    Pin_B9,
-    Pin_B10,
-    Pin_B11,
-    Pin_B12,
-    Pin_B13,
-    Pin_B14,
-    Pin_B15
-} Pin_Channel;
+    PIN_A0,
+    PIN_A1,
+    PIN_A2,
+    PIN_A3,
+    PIN_A4,
+    PIN_A5,
+    PIN_A6,
+    PIN_A7,
+    PIN_A8,
+    PIN_A9,
+    PIN_A10,
+    PIN_A11,
+    PIN_A12,
+    PIN_A13,
+    PIN_A14,
+    PIN_A15,
+    PIN_B0 = 0,
+    PIN_B1,
+    PIN_B2,
+    PIN_B3,
+    PIN_B4,
+    PIN_B5,
+    PIN_B6,
+    PIN_B7,
+    PIN_B8,
+    PIN_B9,
+    PIN_B10,
+    PIN_B11,
+    PIN_B12,
+    PIN_B13,
+    PIN_B14,
+    PIN_B15
+} PIN_Channel;
+
+typedef enum {
+    PORT_A,
+    PORT_B
+} PORT_Channel;
 
 //Pin Configuration Struct
 typedef struct {
@@ -84,31 +89,31 @@ typedef struct {
 void IO_Config(const PIN_CONFIG * config);
 
 //Sets a port's pin to output
-void setPinOut(uint16_t port, uint16_t pin);
+void IO_setPinOut(PORT_Channel port, PIN_Channel pin);
 
 //Sets a port's pin to input
-void setPinIn(uint16_t port, uint16_t pin);
+void IO_setPinIn(PORT_Channel port, PIN_Channel pin);
 
 //Sets a port's pin high
-void setPinHigh(uint16_t port, uint16_t pin);
+void IO_setPinHigh(PORT_Channel port, PIN_Channel pin);
 
 //Sets a port's pin low
-void setPinLow(uint16_t port, uint16_t pin);
+void IO_setPinLow(PORT_Channel port, PIN_Channel pin);
 
 //Toogle's a port's pin (H to L/L to H)
-void togglePin(uint16_t port, uint16_t pin);
+void IO_togglePin(PORT_Channel port, PIN_Channel pin);
 
 //Set's a pin to use the open drain configuration
-void setPinOD(uint16_t port, uint16_t pin);
+void IO_setPinOD(PORT_Channel port, PIN_Channel pin);
 
 //Set's a pin's pullup resistor
-void setPinPU(uint16_t port, uint16_t pin);
+void IO_setPinPU(PORT_Channel port, PIN_Channel pin);
 
 //Set's a pin's pulldown resistor
-void setPinPD(uint16_t port, uint16_t pin);
+void IO_setPinPD(PORT_Channel port, PIN_Channel pin);
 
 //Reads a pins state
-bool readPin(uint16_t port, uint16_t pin);
+bool IO_readPin(PORT_Channel port, PIN_Channel pin);
 
 
 #endif // _IO_FUNCTIONS_H

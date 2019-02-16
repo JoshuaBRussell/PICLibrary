@@ -34,51 +34,51 @@ void IO_Config(const PIN_CONFIG * config){
         port = index / IO_PINS_PER_PORT;
 
         if(config[pin].Direction == OUTPUT){
-            setPinOut(port, pin);
+            IO_setPinOut(port, pin);
         }
         else if (config[pin].Direction == INPUT){
-            //setPinIn(port, pin);
+            //IO_setPinIn(port, pin);
         }
         if(config[pin].State == HIGH){
-            setPinHigh(port, pin);
+            IO_setPinHigh(port, pin);
         }
         else if(config[pin].State == LOW){
-            setPinLow(port, pin);
+            IO_setPinLow(port, pin);
         }
     }
 }
-void setPinOut(uint16_t port, uint16_t pin){
+void IO_setPinOut(PORT_Channel port, PIN_Channel pin){
     *(TRIS_ARRY[port]) &= (~(0x1 << pin));
 }
 
-void setPinIn(uint16_t port, uint16_t pin){
+void IO_setPinIn(PORT_Channel port, PIN_Channel pin){
     *(TRIS_ARRY[port]) |=  (0x1 << pin);
 }
 
-void setPinHigh(uint16_t port, uint16_t pin){
+void IO_setPinHigh(PORT_Channel port, PIN_Channel pin){
     *(LAT_ARRY[port]) |=  (0x1 << pin);
 }
 
-void setPinLow(uint16_t port, uint16_t pin){
+void IO_setPinLow(PORT_Channel port, PIN_Channel pin){
     *(LAT_ARRY[port]) &= ~(0x1 << pin);
 }
 
-void togglePin(uint16_t port, uint16_t pin){
+void IO_togglePin(PORT_Channel port, PIN_Channel pin){
     *(LAT_ARRY[port]) ^= (0x1 << pin);
 }
 
-void setPinOD(uint16_t port, uint16_t pin){
+void IO_setPinOD(PORT_Channel port, PIN_Channel pin){
     *(ODC_ARRY[port]) |=  (0x1 << pin);
 }
 
-void setPinPU(uint16_t port, uint16_t pin){
+void IO_setPinPU(PORT_Channel port, PIN_Channel pin){
     *(PU_ARRY[port]) |=  (0x1 << pin);
 }
 
-void setPinPD(uint16_t port, uint16_t pin){
+void IO_setPinPD(PORT_Channel port, PIN_Channel pin){
     *(PD_ARRY[port]) |=  (0x1 << pin);
 }
 
-bool readPin(uint16_t port, uint16_t pin){
+bool IO_readPin(PORT_Channel port, PIN_Channel pin){
     return (*(PORT_ARRY[port]) & (0x1 << pin));
 }
