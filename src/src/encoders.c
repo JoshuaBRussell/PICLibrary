@@ -11,7 +11,10 @@
 //TODO: Move these into an Encoder_Data struct. This will make it more modular, and allow for multiple encoders.
 volatile static long prev_enc_count = 0; 
 volatile static long enc_count = 0;
-static uint16_t PINS_SEL_BIT_MASK = 0x0000;
+static bool isr_called = false;
+static uint16_t PINS_SEL_BIT_MASK = 0x0003;
+
+extern ENC my_ENC;
 
 //Selects whether to increment/decrement the encoder count depending on the state change of the encoder. 
 static int transistion_table[] = {0, -1, 1, 0, 1, 0, 0, -1, -1, 0, 0, 1, 0, 1, -1, 0};
@@ -21,20 +24,27 @@ static int transistion_table[] = {0, -1, 1, 0, 1, 0, 0, -1, -1, 0, 0, 1, 0, 1, -
 // and the resulting value is used as an index for the transition table.  */
 void isr_call(void){
 
-    static unsigned int enc_state = 0;
-
     //Updates State to Previous State
-    enc_state = enc_state << 2; 
+    my_ENC.enc_state = my_ENC.enc_state << 2; 
+
+    //Raw PORT reads of PORT for speed.
+    uint16_t result = (PORTB >> (my_ENC.pinB));
+    result &= 0x0003;
 
     //Reads in New State. 
-    enc_state = enc_state | ((PORTB & PINS_SEL_BIT_MASK) >> 5); //TODO: Make dynamic soon.
+    my_ENC.enc_state = my_ENC.enc_state | result;
 
-    enc_count = enc_count + transistion_table[enc_state & 0xF];
+    my_ENC.enc_count = my_ENC.enc_count + transistion_table[my_ENC.enc_state & 0xF];
 
+}
+
+bool isISRCalled(){
+    return isr_called;
 }
 
 void _ISR _CNInterrupt(void){
     isr_call();
+    isr_called = true;
     _CNIF = 0;
 }
 
@@ -42,11 +52,43 @@ int getTransistionTable(int index){
     return transistion_table[index];
 }
 
-int ENC_getEncoderCount(){
-    return enc_count;
+//Getters
+PORT_Channel ENC_getENCPort(ENC* enc){
+    return enc->port;
 }
 
-void ENC_setupEncoders(PORT_Channel port, PIN_Channel pinA, PIN_Channel pinB){
+PIN_Channel ENC_getENCPinA(ENC* enc){
+    return enc->pinA;
+}
+
+PIN_Channel ENC_getENCPinB(ENC* enc){
+    return enc->pinB;
+}
+
+long ENC_getENCCount(ENC* enc){
+    return enc->enc_count;
+}
+
+long ENC_getPrevENCCount(ENC* enc){
+    return enc->prev_enc_count;
+}
+
+unsigned int ENC_getENCState(ENC* enc){
+    return enc->enc_state;
+}
+
+void ENC_setupEncoders(ENC* enc_obj, PORT_Channel port, PIN_Channel pinA, PIN_Channel pinB){
+    
+    //Setup Struct
+    enc_obj->port = port;
+    enc_obj->pinA = pinA;
+    enc_obj->pinB = pinB;
+
+    enc_obj->prev_enc_count = 0;
+    enc_obj->enc_count = 0;
+    enc_obj->enc_state = 0;
+    
+    
     PINS_SEL_BIT_MASK = (0x0001 << pinA) | (0x0001 << pinB);
     ANSELB = ~(PINS_SEL_BIT_MASK & ANSELB);
     
@@ -55,7 +97,7 @@ void ENC_setupEncoders(PORT_Channel port, PIN_Channel pinA, PIN_Channel pinB){
     IO_setPinIn(port, pinB);
     CNENB = (PINS_SEL_BIT_MASK | CNENB); 
     
-    //Interrupt Setup
+    //Interrupt Setup 
     _CNIF = 0;
     _CNIP = 2;
     _CNIE = 1;
