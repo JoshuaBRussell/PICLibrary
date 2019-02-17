@@ -77,7 +77,8 @@ unsigned int ENC_getENCState(ENC* enc){
     return enc->enc_state;
 }
 
-void ENC_setupEncoders(ENC* enc_obj, PORT_Channel port, PIN_Channel pinA, PIN_Channel pinB){
+void ENC_setupEncoders(ENC* enc_obj, PORT_Channel port, PIN_Channel pinA, PIN_Channel pinB,
+                       float TICKS_PER_REV){
     
     //Setup Struct
     enc_obj->port = port;
@@ -87,6 +88,9 @@ void ENC_setupEncoders(ENC* enc_obj, PORT_Channel port, PIN_Channel pinA, PIN_Ch
     enc_obj->prev_enc_count = 0;
     enc_obj->enc_count = 0;
     enc_obj->enc_state = 0;
+
+    enc_obj->TICKS_PER_REV = TICKS_PER_REV;
+    enc_obj->TICKS_TO_RADS_SF = (6.283185/TICKS_PER_REV);
     
     
     PINS_SEL_BIT_MASK = (0x0001 << pinA) | (0x0001 << pinB);
@@ -103,9 +107,9 @@ void ENC_setupEncoders(ENC* enc_obj, PORT_Channel port, PIN_Channel pinA, PIN_Ch
     _CNIE = 1;
 }
 
-float ENC_getEncoder_Rads_per_sec(float delta_t_sec){
-    long delta_ticks = (enc_count - prev_enc_count);
-    prev_enc_count = enc_count;
-    return (TICKS_TO_RADS_SF/delta_t_sec)*(float)delta_ticks; 
+float ENC_getENCVel(float delta_t_sec){
+    long delta_ticks = (my_ENC.enc_count - my_ENC.prev_enc_count);
+    my_ENC.prev_enc_count = enc_count;
+    return (my_ENC.TICKS_TO_RADS_SF/delta_t_sec)*(float)delta_ticks; 
 }
 

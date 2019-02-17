@@ -21,7 +21,7 @@ void test_setupEncoders(void){
     CNENB = 0xF000;
 
     ENC my_ENC;
-    ENC_setupEncoders(&my_ENC,PORT_B, PIN_B0, PIN_B1);
+    ENC_setupEncoders(&my_ENC,PORT_B, PIN_B0, PIN_B1, 64.0);
     //Disables correct ANALOG PINS?.
     TEST_ASSERT_BITS(PORTB_ANSEL_PIN_MASK,0xFFFC,ANSELB);
     //Correct pins are set as Inputs?
@@ -45,12 +45,13 @@ void test_setupEncoders(void){
 
 void test_getEncoderRads_sec(void){
 
-    ENC_getEncoder_Rads_per_sec(0.01);
+    ENC_setupEncoders(&my_ENC,PORT_B, PIN_B0, PIN_B1, 64);
+    ENC_getENCVel(0.01);
 }
 
 void test_isr_call_init_state01(void){
 
-    ENC_setupEncoders(&my_ENC,PORT_B, PIN_B0, PIN_B1);
+    ENC_setupEncoders(&my_ENC,PORT_B, PIN_B0, PIN_B1, 64);
 
     my_ENC.enc_state = 0x1;
     _CNIF = 1;
@@ -66,7 +67,7 @@ void test_isr_call_init_state01(void){
 
 void test_isr_call_init_state10(void){
 
-    ENC_setupEncoders(&my_ENC,PORT_B, PIN_B0, PIN_B1);
+    ENC_setupEncoders(&my_ENC,PORT_B, PIN_B0, PIN_B1, 64.0);
 
     my_ENC.enc_state = 0x2;
     _CNIF = 1;
