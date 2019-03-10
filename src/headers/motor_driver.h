@@ -8,6 +8,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <IO_Functions.h>
+#include "pwm_module.h"
 
 /*----------------------------------------------------------------------------//
 // Defines
@@ -31,7 +32,8 @@ typedef struct MOTOR_Driver* MOTOR_Handle;
 // max_voltage - max output voltage to the motor
 // output_pin - pin used to send PWM output to the motor
 // dir_pin_1/2 - pins used to set the direction the motor spins (These pins must be set as output)
-MOTOR_Handle MOTOR_Init(float max_voltage, PIN_Channel output_pin, PIN_Channel dir_pin_1, PIN_Channel dir_pin_2);
+MOTOR_Handle MOTOR_Init(float max_voltage, PORT_Channel output_pin_port, PIN_Channel output_pin,
+                        PORT_Channel dir_pin_1_port, PIN_Channel dir_pin_1, PORT_Channel dir_pin_2_port, PIN_Channel dir_pin_2, PWM_Channel pwm_sel);
 
 //Gets the direction a motr is spinning. (DIR_1 or DIR_2)
 bool MOTOR_getDirection(MOTOR_Handle motor);

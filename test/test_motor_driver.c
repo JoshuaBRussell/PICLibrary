@@ -43,14 +43,14 @@ void test_MOTOR_Init(void)
 
     IO_setPinHigh_Expect(PORT_A, DIR_PIN_1);
     IO_setPinLow_Expect(PORT_A,  DIR_PIN_2);
-    MOTOR_Handle motor1 = MOTOR_Init(1.0, 0, DIR_PIN_1, DIR_PIN_2);
+    MOTOR_Handle motor1 = MOTOR_Init(1.0, PORT_A, PIN_A0, PORT_A, DIR_PIN_1, PORT_A, DIR_PIN_2, PWM_0);
 }
 
 
 void test_get_motor_direction_default(){
     SETUP_MOCK_MOTOR_INIT();
     
-    MOTOR_Handle motor1 = MOTOR_Init(1.0, 0, 0, 1);
+    MOTOR_Handle motor1 = MOTOR_Init(1.0, PORT_A, PIN_A0, PORT_A, DIR_PIN_1, PORT_A, DIR_PIN_2, PWM_0);
 
 
     TEST_ASSERT_EQUAL(DIR_1, MOTOR_getDirection(motor1));
@@ -58,7 +58,7 @@ void test_get_motor_direction_default(){
 
 void test_set_motor_direction(){
     SETUP_MOCK_MOTOR_INIT();
-    MOTOR_Handle motor1 = MOTOR_Init(1.0, 0, DIR_PIN_1, DIR_PIN_2);
+    MOTOR_Handle motor1 = MOTOR_Init(1.0, PORT_A, PIN_A0, PORT_A, DIR_PIN_1, PORT_A, DIR_PIN_2, PWM_0);
     
     IO_setPinLow_Expect(PORT_A, DIR_PIN_1);
     IO_setPinHigh_Expect(PORT_A, DIR_PIN_2);
@@ -73,7 +73,7 @@ void test_set_motor_direction(){
 
 void test_set_motor_output(){
     SETUP_MOCK_MOTOR_INIT();
-    MOTOR_Handle motor1 = MOTOR_Init(12.0, 0, DIR_PIN_1, DIR_PIN_2);
+    MOTOR_Handle motor1 = MOTOR_Init(12.0, PORT_A, PIN_A0, PORT_A, DIR_PIN_1, PORT_A, DIR_PIN_2, PWM_0);
     
     float motor_input = 6.0;
     
