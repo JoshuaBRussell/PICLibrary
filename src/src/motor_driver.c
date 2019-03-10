@@ -56,12 +56,6 @@ MOTOR_Handle MOTOR_Init(float max_voltage, PORT_Channel output_pin_port, PIN_Cha
 
     mtr_drv1.pwm_sel = pwm_sel;
 
-    //Inits directional pins to defaults state
-    IO_setPinOut(mtr_drv1.dir_pin_1_port, mtr_drv1.dir_pin_1);
-    IO_setPinOut(mtr_drv1.dir_pin_2_port, mtr_drv1.dir_pin_2);
-    IO_setPinHigh(mtr_drv1.dir_pin_1_port, mtr_drv1.dir_pin_1);
-    IO_setPinLow(mtr_drv1.dir_pin_2_port,  mtr_drv1.dir_pin_2);
-
     return &mtr_drv1;
 }
 

@@ -24,31 +24,17 @@ uint16_t getPWM_High_Time_from_Float(float input, float max_input, uint16_t us_m
     return ((uint16_t)((input/max_input) * (float)us_max_period) + 0.5);
 }
 
-void SETUP_MOCK_MOTOR_INIT(void){
-
-    IO_setPinOut_Expect(0, DIR_PIN_1);
-    IO_setPinOut_Expect(0, DIR_PIN_2);
-
-    IO_setPinHigh_Expect(0, DIR_PIN_1);
-    IO_setPinLow_Expect(0,  DIR_PIN_2);
-}
-
 void test_MOTOR_Init(void)
 {
     float DIR_PIN_1 = 0;
     float DIR_PIN_2 = 1;
     
-    IO_setPinOut_Expect(PORT_A, DIR_PIN_1);
-    IO_setPinOut_Expect(PORT_A, DIR_PIN_2);
-
-    IO_setPinHigh_Expect(PORT_A, DIR_PIN_1);
-    IO_setPinLow_Expect(PORT_A,  DIR_PIN_2);
     MOTOR_Handle motor1 = MOTOR_Init(1.0, PORT_A, PIN_A0, PORT_A, DIR_PIN_1, PORT_A, DIR_PIN_2, PWM_0);
 }
 
 
 void test_get_motor_direction_default(){
-    SETUP_MOCK_MOTOR_INIT();
+
     
     MOTOR_Handle motor1 = MOTOR_Init(1.0, PORT_A, PIN_A0, PORT_A, DIR_PIN_1, PORT_A, DIR_PIN_2, PWM_0);
 
@@ -57,7 +43,7 @@ void test_get_motor_direction_default(){
 }
 
 void test_set_motor_direction(){
-    SETUP_MOCK_MOTOR_INIT();
+
     MOTOR_Handle motor1 = MOTOR_Init(1.0, PORT_A, PIN_A0, PORT_A, DIR_PIN_1, PORT_A, DIR_PIN_2, PWM_0);
     
     IO_setPinLow_Expect(PORT_A, DIR_PIN_1);
@@ -72,7 +58,7 @@ void test_set_motor_direction(){
 }
 
 void test_set_motor_output(){
-    SETUP_MOCK_MOTOR_INIT();
+
     MOTOR_Handle motor1 = MOTOR_Init(12.0, PORT_A, PIN_A0, PORT_A, DIR_PIN_1, PORT_A, DIR_PIN_2, PWM_0);
     
     float motor_input = 6.0;
