@@ -48,7 +48,6 @@ void isr_call(void){
 }
 
 void _ISR _CNInterrupt(void){
-    ISR_ran = true;
     isr_call();
     _CNIF = 0;
 }
