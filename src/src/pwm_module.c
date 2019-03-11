@@ -59,10 +59,10 @@ void PWM_setOCSyncSel(PWM_Channel pwm_sel, OC_SYNC_SOURCE_SEL sync_source){
 }
 
 //Initializes the PWM HW
-void PWM_Init(uint16_t pin, uint16_t us_period){
+void PWM_Init(PIN_Channel pin, uint16_t us_period){
     
     //Setup Pin
-    setPinOut(1, pin);
+    IO_setPinOut(PORT_B, pin);
     SET_PWM_TO_RB7();//TODO: make it mappable to any pin
 
     PWM_setOCR(PWM_0, 0x0000);//Defaults to 0% duty cycle
@@ -78,7 +78,11 @@ void PWM_setHighTime(uint16_t usHigh){
     PWM_setOCR(PWM_0, us_to_ticks(usHigh, 1)); //pre = 1 -> no prescale  
 }
 
-uint16_t PWM_getPeriod(PWM_Channel pwm_sel){
-    return *(OCxRS_ARRY[pwm_sel]);
+void PWM_setScaledOutput(PWM_Channel pwm_sel, float scale_factor){
+    uint16_t new_val  = (scale_factor * (float)(*(OCxRS_ARRY[pwm_sel])));
+    PWM_setOCR(pwm_sel, new_val);
 }
 
+uint16_t PWM_getOCRS(PWM_Channel pwm_sel){
+    return *(OCxRS_ARRY[pwm_sel]);
+}

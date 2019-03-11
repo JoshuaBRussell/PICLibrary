@@ -7,6 +7,8 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+#include <IO_Functions.h>
+#include "pwm_module.h"
 
 /*----------------------------------------------------------------------------//
 // Defines
@@ -17,21 +19,9 @@
 #define DIR_2 true
 
 
-/*----------------------------------------------------------------------------//
-// Structs
-//----------------------------------------------------------------------------*/
+//
+typedef struct MOTOR_Driver* MOTOR_Handle;
 
-//Motor Struct
-typedef struct{
-    float max_voltage;
-    
-    uint16_t output_pin;
-    uint16_t dir_pin_1;
-    uint16_t dir_pin_2;
-
-    bool motor_dir;
-    
-} MOTOR;
 
 
 /*----------------------------------------------------------------------------//
@@ -42,16 +32,17 @@ typedef struct{
 // max_voltage - max output voltage to the motor
 // output_pin - pin used to send PWM output to the motor
 // dir_pin_1/2 - pins used to set the direction the motor spins (These pins must be set as output)
-void MOTOR_Init(MOTOR* motor, float max_voltage, uint16_t output_pin, uint16_t dir_pin_1, uint16_t dir_pin_2);
+MOTOR_Handle MOTOR_Init(float max_voltage, PORT_Channel output_pin_port, PIN_Channel output_pin,
+                        PORT_Channel dir_pin_1_port, PIN_Channel dir_pin_1, PORT_Channel dir_pin_2_port, PIN_Channel dir_pin_2, PWM_Channel pwm_sel);
 
 //Gets the direction a motr is spinning. (DIR_1 or DIR_2)
-bool MOTOR_getDirection(MOTOR* motor);
+bool MOTOR_getDirection(MOTOR_Handle motor);
 
 //Sets the dir a motor is spins (DIR_1 or DIR_2)
-void MOTOR_setDirection(MOTOR* motor, bool dir);
+void MOTOR_setDirection(MOTOR_Handle motor, bool dir);
 
 //Takes sign and magnitude of input and applies it to motor driver electronics.
 //In case of using PWM, sets pulse width proportional to desired motor voltage
-void MOTOR_setOutput(MOTOR* motor, float motor_voltage);
+void MOTOR_setOutput(MOTOR_Handle motor, float motor_voltage);
 
 #endif // _MOTOR_DRIVER_H_

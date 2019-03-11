@@ -5,9 +5,30 @@
 #include <stdbool.h>
 #include <math.h>
 
-/*----------------------------------------------------------------------------//
-// PID Implementation 
-//----------------------------------------------------------------------------*/
+struct MOTOR_Driver{
+    //Generic Motor Driver params -- for info that is generic to any motor being driven
+    float max_voltage;
+    bool motor_dir;
+
+    //Implementation specific datamembers.
+    //In this case it uses 2 pins to choose direction, and one pin for the PWM output.
+
+    //It's possible that this could be changed to be a HAL for an even lower level hardware motor driver. 
+    PIN_Channel output_pin;
+
+    PORT_Channel dir_pin_1_port;
+    PIN_Channel dir_pin_1;
+
+    PORT_Channel dir_pin_2_port;
+    PIN_Channel dir_pin_2;
+
+    PWM_Channel pwm_sel;
+
+
+    
+};
+
+static struct MOTOR_Driver mtr_drv1; //The motor driver definition. 
 
 //Helper function that converts a float input with an expected float max value to a proportional high time 
 //for the PWM. 
@@ -15,47 +36,51 @@ static uint16_t getPWM_High_Time_from_Float(float input, float max_input, uint16
     return ((uint16_t)((input/max_input) * (float)us_max_period) + 0.5);
 }
 
-void MOTOR_Init(MOTOR* motor, float max_voltage, uint16_t output_pin, uint16_t dir_pin_1, uint16_t dir_pin_2){
+MOTOR_Handle MOTOR_Init(float max_voltage, PORT_Channel output_pin_port, PIN_Channel output_pin,
+                        PORT_Channel dir_pin_1_port, PIN_Channel dir_pin_1, PORT_Channel dir_pin_2_port, PIN_Channel dir_pin_2, PWM_Channel pwm_sel){
     
     //Initializes data members
-    motor->motor_dir = DIR_1;
-    motor->max_voltage = max_voltage;
-    motor->output_pin = output_pin;
-    motor->dir_pin_1 = dir_pin_1;
-    motor->dir_pin_2 = dir_pin_2;
+    mtr_drv1.motor_dir = DIR_1;
+    mtr_drv1.max_voltage = max_voltage;
 
-    //Inits directional pins to defaults state
-    setPinOut(0, motor->dir_pin_1);
-    setPinOut(0, motor->dir_pin_2);
-    setPinHigh(0, motor->dir_pin_1);
-    setPinLow(0,  motor->dir_pin_2);
+    mtr_drv1.output_pin = output_pin;
+    
+    mtr_drv1.dir_pin_1_port = dir_pin_1_port;
+    mtr_drv1.dir_pin_1 = dir_pin_1;
+
+    mtr_drv1.dir_pin_2_port = dir_pin_2_port;
+    mtr_drv1.dir_pin_2 = dir_pin_2;
+
+    mtr_drv1.pwm_sel = pwm_sel;
+
+    return &mtr_drv1;
 }
 
-bool MOTOR_getDirection(MOTOR* motor){
+bool MOTOR_getDirection(MOTOR_Handle motor){
     return motor->motor_dir;
 }
 
-void MOTOR_setDirection(MOTOR* motor, bool direction){
+void MOTOR_setDirection(MOTOR_Handle motor, bool direction){
     motor->motor_dir = direction;
-    
+
     if(motor->motor_dir == DIR_1){
-        setPinHigh(0, motor->dir_pin_1);
-        setPinLow(0,  motor->dir_pin_2);
+        IO_setPinHigh(motor->dir_pin_1_port, motor->dir_pin_1);
+        IO_setPinLow(motor->dir_pin_2_port, motor->dir_pin_2);
     }
     //DIR_2
     else {
-        setPinLow(0,  motor->dir_pin_1);
-        setPinHigh(0, motor->dir_pin_2);
+        IO_setPinLow(motor->dir_pin_1_port, motor->dir_pin_1);
+        IO_setPinHigh(motor->dir_pin_2_port, motor->dir_pin_2);
         
     }
 
 }
 
-void MOTOR_setOutput(MOTOR* motor, float motor_voltage){
+void MOTOR_setOutput(MOTOR_Handle motor, float motor_voltage){
     
     //Set Direction
     MOTOR_setDirection(motor, signbit(motor_voltage));
 
     //Set Output
-    PWM_setHighTime(((uint16_t)((fabs(motor_voltage)/motor->max_voltage) * (float)PWM_getPeriod()) + 0.5));//getPWM_High_Time_from_Float(motor_voltage, motor->max_voltage, PWM_getPeriod()));
+    PWM_setScaledOutput(motor->pwm_sel, (fabs(motor_voltage)/motor->max_voltage));
 }

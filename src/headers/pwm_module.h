@@ -44,7 +44,8 @@ void PWM_setOCR(PWM_Channel pwm_sel, uint16_t ocr_val); //"PWM setHighTime"
 void PWM_setOCRS(PWM_Channel pwm_sel, uint16_t ocrs_val); //"PWM setPeriod"
 //Set Duty Cycle
 void PWM_setHighTime(uint16_t usHigh);
-uint16_t PWM_getPeriod(PWM_Channel pwm_sel);
+void PWM_setScaledOutput(PWM_Channel pwm_sel, float scale_factor);
+uint16_t PWM_getOCRS(PWM_Channel pwm_sel);
 
 //These functions are implementation specific, and need to be hidden in the implementation file. Or EVEN BETTER and Output Compare Interface Module needs 
 //to be made, and the PWM calls its interface to create a PWM module. 
