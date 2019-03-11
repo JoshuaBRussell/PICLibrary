@@ -29,9 +29,6 @@ struct MOTOR_Driver{
 };
 
 static struct MOTOR_Driver mtr_drv1; //The motor driver definition. 
-/*----------------------------------------------------------------------------//
-// PID Implementation 
-//----------------------------------------------------------------------------*/
 
 //Helper function that converts a float input with an expected float max value to a proportional high time 
 //for the PWM. 
@@ -85,5 +82,5 @@ void MOTOR_setOutput(MOTOR_Handle motor, float motor_voltage){
     MOTOR_setDirection(motor, signbit(motor_voltage));
 
     //Set Output
-   PWM_setScaledOutput(motor->pwm_sel, (fabs(motor_voltage)/motor->max_voltage));
+    PWM_setScaledOutput(motor->pwm_sel, (fabs(motor_voltage)/motor->max_voltage));
 }
