@@ -22,13 +22,13 @@ int main(){
     //Output starts on first call
     //IO_togglePin(PORT_B, PIN_B5);
     //PWM_setHighTime(timeHigh1);
-    MOTOR_setOutput(motor1, 3.5);
+    MOTOR_setOutput(motor1, -3.5);
     //PWM_setScaledOutput(PWM_0, 0.5);
 
     //startPWM();
     
     while(1){
-    //IO_togglePin(PORT_B, PIN_B5);
+    //IO_setPinHigh(PORT_B, PIN_B6);
     }    
 
 

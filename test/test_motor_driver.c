@@ -44,15 +44,15 @@ void test_get_motor_direction_default(){
 
 void test_set_motor_direction(){
 
-    MOTOR_Handle motor1 = MOTOR_Init(1.0, PORT_A, PIN_A0, PORT_A, DIR_PIN_1, PORT_A, DIR_PIN_2, PWM_0);
+    MOTOR_Handle motor1 = MOTOR_Init(1.0, PORT_A, PIN_A0, PORT_A, DIR_PIN_1, PORT_B, DIR_PIN_2, PWM_0);
     
     IO_setPinLow_Expect(PORT_A, DIR_PIN_1);
-    IO_setPinHigh_Expect(PORT_A, DIR_PIN_2);
+    IO_setPinHigh_Expect(PORT_B, DIR_PIN_2);
     MOTOR_setDirection(motor1, DIR_2);
     TEST_ASSERT_EQUAL(DIR_2, MOTOR_getDirection(motor1));
 
     IO_setPinHigh_Expect(PORT_A, DIR_PIN_1);
-    IO_setPinLow_Expect(PORT_A, DIR_PIN_2);
+    IO_setPinLow_Expect(PORT_B, DIR_PIN_2);
     MOTOR_setDirection(motor1, DIR_1);
     TEST_ASSERT_EQUAL(DIR_1, MOTOR_getDirection(motor1));
 }
