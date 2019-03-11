@@ -59,17 +59,16 @@ void test_set_motor_direction(){
 
 void test_set_motor_output(){
 
-    MOTOR_Handle motor1 = MOTOR_Init(12.0, PORT_A, PIN_A0, PORT_A, DIR_PIN_1, PORT_A, DIR_PIN_2, PWM_0);
+    MOTOR_Handle motor1 = MOTOR_Init(12.0, PORT_A, PIN_A0, PORT_A, DIR_PIN_1, PORT_B, DIR_PIN_2, PWM_0);
     
     float motor_input = 6.0;
     
     //Sets Dir
     IO_setPinHigh_Expect(PORT_A, DIR_PIN_1);
-    IO_setPinLow_Expect(PORT_A, DIR_PIN_2);
+    IO_setPinLow_Expect(PORT_B, DIR_PIN_2);
 
     //Sets Output
-    PWM_getPeriod_ExpectAndReturn(PWM_0, 2000);
-    PWM_setHighTime_Expect(PWM_PERIOD_US/2);
+    PWM_setScaledOutput_Expect(PWM_0, (fabs(motor_input)/12.0));
     
     MOTOR_setOutput(motor1, motor_input);
 
@@ -77,10 +76,9 @@ void test_set_motor_output(){
 
     motor_input = -6.0;
     IO_setPinLow_Expect(PORT_A, DIR_PIN_1);
-    IO_setPinHigh_Expect(PORT_A, DIR_PIN_2);
+    IO_setPinHigh_Expect(PORT_B, DIR_PIN_2);
 
-    PWM_getPeriod_ExpectAndReturn(PWM_0, 2000);
-    PWM_setHighTime_Expect(PWM_PERIOD_US/2);
+    PWM_setScaledOutput_Expect(PWM_0, (fabs(motor_input)/12.0));
 
     MOTOR_setOutput(motor1, motor_input);
 
