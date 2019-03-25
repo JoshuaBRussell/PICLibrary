@@ -8,10 +8,10 @@
 //as Clock Freq. and the Watch Dog Timer.                       
 //----------------------------------------------------------------------------*/
 
-
-/*----------------------------------------------------------------------------//
-//Defines
-//----------------------------------------------------------------------------*/
+#include <xc.h>
+// /*----------------------------------------------------------------------------//
+// //Defines
+// //----------------------------------------------------------------------------*/
 
 #pragma config ICS = PGD1               // ICD Communication Channel Select bits (Communicate on PGEC1 and PGED1)
 #pragma config JTAGEN = OFF             // JTAG Enable bit (JTAG is disabled)
@@ -32,7 +32,7 @@
 #pragma config POSCMD = NONE            // Primary Oscillator Mode Select bits (Primary Oscillator disabled)
 #pragma config OSCIOFNC = OFF           // OSC2 Pin Function bit (OSC2 is clock output)
 #pragma config IOL1WAY = ON             // Peripheral pin select configuration (AlHIGH only one reconfiguration)
-#pragma config FCKSM = CSDCMD           // Clock Switching Mode bits (Both Clock switching and Fail-safe Clock Monitor are disabled)
+#pragma config FCKSM = CSECMD           // Clock Switching Mode bits (clock switching enabled)
 
 // FOSCSEL
 #pragma config FNOSC = FRC              // Oscillator Source Selection (Internal Fast RC (FRC))
@@ -41,6 +41,7 @@
 // FGS
 #pragma config GWRP = OFF               // General Segment Write-Protect bit (General Segment may be written)
 #pragma config GCP = OFF                // General Segment Code-Protect bit (General Segment Code protect is Disabled)
+
 
 
 #endif // _MAIN_H_
