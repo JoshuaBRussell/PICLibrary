@@ -3,7 +3,7 @@
 #include <xc.h>
 #include <stdbool.h>
 
-#define INSTR_CLOCK 3.69E6
+#define INSTR_CLOCK 39.92E6 //Based off clock settings (FRC w/PLL M = 65, N2 = 3, N1 = 3)
 #define NUM_TIMERS 2
 
 #define TIMER_ON_BIT_MASK  0x8000
@@ -21,12 +21,12 @@ uint16_t volatile * const PERIOD_ARRY[NUM_TIMERS] = { (uint16_t*)&PR2, (uint16_t
 
 uint16_t ms_to_ticks(uint16_t ms, uint16_t pre){
     float f_ticks = (ms*INSTR_CLOCK)/(1000*pre); 
-    return (uint16_t)(f_ticks + 0.5);
+    return (uint16_t)(f_ticks + 0.5) - 1;
 }
 
 uint16_t us_to_ticks(uint16_t us, uint16_t pre){
     float f_ticks = (us*INSTR_CLOCK)/(1000000*pre); 
-    return (uint16_t)(f_ticks + 0.5);
+    return (uint16_t)(f_ticks + 0.5) - 1;
 }
 
 

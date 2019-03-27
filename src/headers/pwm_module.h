@@ -34,6 +34,8 @@ typedef enum
     OC_SYNC_SEL_OCxRS = 0x1F,
 } OC_SYNC_SOURCE_SEL;
 
+#define SET_PWM_TO_RB7() (_RP39R = 16)
+
 
 //TODO: Make all references to using Output Compare hidden. That way it looks like a pure PWM interface to the user. And so,
 //implementation details are hidden. 

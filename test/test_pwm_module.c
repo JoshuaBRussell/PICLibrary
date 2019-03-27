@@ -17,14 +17,6 @@ void tearDown(void)
 {
 }
 
-void test_PWM_getPeriod(){
-    PWM_Init(0, 2000);
-
-    PWM_setOCRS(PWM_0, 0x1234);
-    TEST_ASSERT_EQUAL_UINT16(0x1234, PWM_getPeriod(PWM_0));
-    
-}
-
 void test_PWM_setHighTime(){
     PWM_Init(0, 2000);
     PWM_setHighTime(1000);
@@ -105,4 +97,10 @@ void test_PWM_setSyncSel(){
 
     PWM_setOCSyncSel(PWM_0, OC_SYNC_SEL_OCxRS);
     TEST_ASSERT_EQUAL(0x0001F, OC1CON2);
+}
+
+void test_PWM_setScaledOutput(){
+    OC1RS = 1000;
+    PWM_setScaledOutput(PWM_0, 0.5);
+    TEST_ASSERT_UINT16_WITHIN(5, 500, OC1R);
 }

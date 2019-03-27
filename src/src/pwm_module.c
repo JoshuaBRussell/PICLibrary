@@ -18,9 +18,6 @@
 #define OCxCON2_SYNC_SRC_LOC 0x001F
 #define OC_SYNC_SRC_BIT_OFFSET 0
 
-#define SET_PWM_TO_RB7() (_RP39R = 16)
-
-
 uint16_t volatile * const OCxCON1_ARRY[NUM_PORTS] = { (uint16_t*)&OC1CON1};
 
 uint16_t volatile * const OCxCON2_ARRY[NUM_PORTS] = { (uint16_t*)&OC1CON2};
@@ -61,10 +58,6 @@ void PWM_setOCSyncSel(PWM_Channel pwm_sel, OC_SYNC_SOURCE_SEL sync_source){
 //Initializes the PWM HW
 void PWM_Init(PIN_Channel pin, uint16_t us_period){
     
-    //Setup Pin
-    IO_setPinOut(PORT_B, pin);
-    SET_PWM_TO_RB7();//TODO: make it mappable to any pin
-
     PWM_setOCR(PWM_0, 0x0000);//Defaults to 0% duty cycle
     PWM_setOCRS(PWM_0, us_to_ticks(us_period, 1));//pre = 1 -> no prescale
     PWM_setOCMode(PWM_0, OC_MODE_EDGE_PWM); 
