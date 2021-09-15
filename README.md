@@ -16,8 +16,7 @@ By writing a peripheral library, while trying to write a PID motor control algor
 
 I am using the dsPIC33EP128GP502 microcontroller. 
 
-**With this being said, the main goal for all of this is to _learn_** The code is likely to change often, and will probably have sections of poorly written code...*initially*. 
-
+**With this being said, the main goal for all of this is to _learn_**  It's not meant to be fine tuned or polished. 
 
 **Update (07/02/18):**
 
